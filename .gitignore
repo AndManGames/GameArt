@@ -161,4 +161,7 @@ cython_debug/
 #.idea/
 
 # project specific files
-keylogger.txt
+keylogger.csv
+
+# VS Code
+settings.json

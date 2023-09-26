@@ -1,33 +1,38 @@
 import os
 import time
+from typing import Any
 
+import pandas as pd
 import pynput
 from pynput import keyboard
-from pynput.keyboard import Key
+from pynput.keyboard import Key, KeyCode
 
-t = 0
-
-
-def on_key_press(key: Key) -> None:
-    global t
-    t = time.time()
+time_start_key_press = 0
+data_frame_keys_pressed = pd.DataFrame(columns=['Key', 'Duration'])
 
 
-def on_key_release(key: Key) -> None:
-    global t
-    time_taken = round(time.time() - t, 2)
-    print("The key", key, " is pressed for", time_taken, 'seconds')
+def on_key_press(key: Key | KeyCode | None) -> None:
+    global time_start_key_press
+    time_start_key_press = time.time()
 
-    with open("keylogger.txt", "a") as f:
-        f.write(str(key))
-        if key == keyboard.Key.esc:
-            # Stop listener
-            return False
+
+def on_key_release(key: Key | KeyCode | None) -> Any:
+    global time_start_key_press, data_frame_keys_pressed
+
+    time_taken = round(time.time() - time_start_key_press, 2)
+    data_frame_keys_pressed.loc[-1] = [  # type: ignore
+        str(key), str(time_taken)]
+    data_frame_keys_pressed.index = data_frame_keys_pressed.index + 1
+
+    if key == keyboard.Key.esc:
+        data_frame_keys_pressed.to_csv(
+            'keylogger.csv', sep='\t', encoding='utf-8')
+        return False
 
 
 if __name__ == "__main__":
-    if os.path.exists("keylogger.txt"):
-        os.remove("keylogger.txt")
+    if os.path.exists("keylogger.csv"):
+        os.remove("keylogger.csv")
 
     with keyboard.Listener(on_press=on_key_press, on_release=on_key_release) as listener:
         listener.join()
