@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gameart"
+version = "0.0.1"
+authors = [
+  { name="Andreas Schneider", email="author@example.com" },
+]
+description = "Create printable art from gameplay input."
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+  'fire >= 0.5.0',
+  'pandas >= 2.1.1',
+  'pynput >= 1.7.6'
+]
+
+[project.scripts]
+gameart = "gameart.cli:main"
+
+[project.urls]
+"Homepage" = "https://github.com/AndManGames/GameArt"
+"Bug Tracker" = "https://github.com/AndManGames/GameArt/issues"
