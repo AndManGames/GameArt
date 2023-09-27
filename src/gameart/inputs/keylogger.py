@@ -1,3 +1,5 @@
+import datetime
+import logging
 import time
 from typing import Any
 
@@ -22,6 +24,13 @@ def _on_key_release(key: Key | KeyCode | None) -> Any:
         str(key), str(time_taken)]
 
     if key == keyboard.Key.esc:
+        current_time = datetime.datetime.now()
+        formatted_time = current_time.strftime('%Y-%m-%d_%H-%M-%S')
+        file_name = f'keylogger_{formatted_time}.csv'
+
+        logging.info("Recording stopped")
+        logging.info(f"Log saved to {file_name}")
+
         data_frame_keys_pressed.to_csv(
-            'keylogger.csv', sep='\t', encoding='utf-8')
+            file_name, sep='\t', encoding='utf-8')
         return False
