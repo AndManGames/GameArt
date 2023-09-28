@@ -12,11 +12,28 @@ data_frame_keys_pressed = pd.DataFrame(columns=['Key', 'Duration'])
 
 
 def _on_key_press(key: Key | KeyCode | None) -> None:
+    """
+    This method will be called on each key press. It sets the starting timestamp of the key press to current time.time().
+    The timestamp is used later to calculate the duration of each key press.
+
+    Args:
+        key (Key | KeyCode | None): The argument key is the key which got pressed on the Keyboard
+    """
     global time_start_key_press
     time_start_key_press = time.time()
 
 
 def _on_key_release(key: Key | KeyCode | None) -> Any:
+    """
+    This method will be called on each key release. The duration of each key press is calculate here.
+    It also writes the keylog output to a csv file and handles the termination of the key recording when the user presses 'Esc'.
+
+    Args:
+        key (Key | KeyCode | None): The argument key is the key which got released on the Keyboard
+
+    Returns:
+        Any: The method returns False when the key 'Esc' was pressed or None for any other key.
+    """
     global time_start_key_press, data_frame_keys_pressed
 
     time_taken = round(time.time() - time_start_key_press, 2)

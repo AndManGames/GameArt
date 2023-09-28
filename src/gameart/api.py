@@ -8,6 +8,9 @@ logging.basicConfig(level=logging.INFO)
 
 
 def record() -> None:
+    """
+    Public function to start recording of keyboard input
+    """
     logging.info("Recording start")
     logging.info("Press 'Esc' to stop recording")
     logging.info("Recording...")
