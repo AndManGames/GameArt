@@ -37,8 +37,6 @@ def _on_key_release(key: Key | KeyCode | None) -> Any:
     global time_start_key_press, data_frame_keys_pressed
 
     time_taken = round(time.time() - time_start_key_press, 2)
-    data_frame_keys_pressed.loc[len(data_frame_keys_pressed.index)] = [  # type: ignore
-        str(key), str(time_taken)]
 
     if key == keyboard.Key.esc:
         current_time = datetime.datetime.now()
@@ -51,3 +49,6 @@ def _on_key_release(key: Key | KeyCode | None) -> Any:
         data_frame_keys_pressed.to_csv(
             file_name, sep=',', encoding='utf-8')
         return False
+
+    data_frame_keys_pressed.loc[len(data_frame_keys_pressed.index)] = [  # type: ignore
+        str(key), str(time_taken)]
