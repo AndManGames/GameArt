@@ -7,7 +7,7 @@ from gameart.inputs import keylogger
 logging.basicConfig(level=logging.INFO)
 
 
-def start_logging() -> None:
+def record() -> None:
     logging.info("Recording start")
     logging.info("Press 'Esc' to stop recording")
     logging.info("Recording...")

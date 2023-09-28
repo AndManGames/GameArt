@@ -1,11 +1,11 @@
 import fire
 
-from gameart.api import start_logging
+from gameart.api import record
 
 
 def main():
     fire.Fire({
-        'start_logging': start_logging
+        'record': record
     })
 
 
