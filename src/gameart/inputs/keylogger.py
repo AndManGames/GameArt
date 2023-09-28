@@ -49,5 +49,5 @@ def _on_key_release(key: Key | KeyCode | None) -> Any:
         logging.info(f"Log saved to {file_name}")
 
         data_frame_keys_pressed.to_csv(
-            file_name, sep='\t', encoding='utf-8')
+            file_name, sep=',', encoding='utf-8')
         return False
