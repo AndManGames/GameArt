@@ -1,11 +1,12 @@
 import fire
 
-from gameart.api import record
+from gameart.api import draw, record
 
 
 def main():
     fire.Fire({
-        'record': record
+        'record': record,
+        'draw': draw
     })
 
 

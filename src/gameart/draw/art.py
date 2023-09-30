@@ -32,7 +32,3 @@ def draw_art():
 
     plt.title('GameArt')
     plt.show()
-
-
-if __name__ == "__main__":
-    draw_art()
