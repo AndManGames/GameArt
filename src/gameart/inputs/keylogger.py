@@ -51,4 +51,4 @@ def _on_key_release(key: Key | KeyCode | None) -> Any:
         return False
 
     data_frame_keys_pressed.loc[len(data_frame_keys_pressed.index)] = [  # type: ignore
-        str(key), str(time_taken)]
+        str(key).replace("'", ""), str(time_taken)]
