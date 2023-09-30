@@ -21,12 +21,18 @@ def _get_latest_csv_file(path: Path) -> Path:
     Args:
         path (Path): Path to folder where csv files, which should be checked, are stored
 
+
+    Raises:
+        FileNotFoundError: Raises exception if no csv file exists in given path
+
     Returns:
         Path: Returns the path to the csv file which was modified latest
     """
     output_csv_path = path / '*.csv'
 
     list_of_files = glob.glob(str(output_csv_path))
-    latest_file = Path(max(list_of_files, key=os.path.getctime))
-
-    return latest_file
+    if len(list_of_files) > 0:
+        latest_file = Path(max(list_of_files, key=os.path.getctime))
+        return latest_file
+    else:
+        raise FileNotFoundError
