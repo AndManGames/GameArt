@@ -6,7 +6,7 @@ import pandas as pd
 from gameart.utils import utils
 
 
-def draw_art():
+def draw():
     """
     Draws an matplotlib diagram based on a csv input files which needs to have the columns Key (string) and Duration(float)
     """
