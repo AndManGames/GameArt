@@ -28,3 +28,9 @@ gameart = "gameart.cli:main"
 [project.urls]
 "Homepage" = "https://github.com/AndManGames/GameArt"
 "Bug Tracker" = "https://github.com/AndManGames/GameArt/issues"
+
+[tool.autopep8]
+max_line_length = 120
+in-place = true
+recursive = true
+aggressive = 3
