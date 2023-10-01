@@ -12,7 +12,7 @@ def draw_art():
     """
     fig, ax = plt.subplots()
 
-    git_root_path = Path(utils._get_git_root_path())
+    git_root_path = utils._get_git_root_path()
     csv_file = utils._get_latest_csv_file(git_root_path)
     data_frame_keys_pressed = pd.read_csv(csv_file)
 
