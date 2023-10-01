@@ -9,7 +9,7 @@ from gameart.utils import utils
 
 def test_draw():
     """
-    Case 1: Mock external dependencies, check if expected values are returned and 
+    Case 1: Mock external dependencies, check if expected values are returned and
     verify that matplotlib.pyplot.show() was called to display the plot.
     """
     mock_git_root_path = "/mock/git/root/path"

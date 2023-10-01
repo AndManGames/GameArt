@@ -11,7 +11,8 @@ def _get_git_root_path() -> Path:
     Returns:
         str: string with the root path of the current git repository
     """
-    return Path(subprocess.Popen(['git', 'rev-parse', '--show-toplevel'], stdout=subprocess.PIPE).communicate()[0].rstrip().decode('utf-8'))
+    return Path(subprocess.Popen(['git', 'rev-parse', '--show-toplevel'],
+                stdout=subprocess.PIPE).communicate()[0].rstrip().decode('utf-8'))
 
 
 def _get_latest_csv_file(path: Path) -> Path:
