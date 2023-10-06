@@ -17,7 +17,7 @@ def _on_key_press(key: Key | KeyCode | None) -> None:
     The timestamp is used later to calculate the duration of each key press.
 
     Args:
-        key (Key | KeyCode | None): The argument key is the key which got pressed on the Keyboard
+        key (Key | KeyCode | None): This argument is the key which got pressed on the Keyboard
     """
     global time_start_key_press
     time_start_key_press = time.time()
@@ -29,7 +29,7 @@ def _on_key_release(key: Key | KeyCode | None) -> Any:
     It also writes the keylog output to a csv file and handles the termination of the key recording when the user presses 'Esc'.
 
     Args:
-        key (Key | KeyCode | None): The argument key is the key which got released on the Keyboard
+        key (Key | KeyCode | None): This argument is the key which got released on the Keyboard
 
     Returns:
         Any: The method returns False when the key 'Esc' was pressed or None for any other key.
@@ -52,3 +52,14 @@ def _on_key_release(key: Key | KeyCode | None) -> Any:
 
     data_frame_keys_pressed.loc[len(data_frame_keys_pressed.index)] = [  # type: ignore
         str(key).replace("'", ""), str(time_taken)]
+    
+def _record() -> None:
+    """
+    Starts the listener of pynput to record keys pressed.
+    """
+    logging.info("Recording start")
+    logging.info("Press 'Esc' to stop recording")
+    logging.info("Recording...")
+
+    with keyboard.Listener(on_press=_on_key_press, on_release=_on_key_release) as listener:
+        listener.join()
