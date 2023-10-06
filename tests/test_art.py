@@ -1,4 +1,4 @@
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 
 import matplotlib.pyplot
 import pandas
@@ -22,7 +22,6 @@ def test_draw():
             patch('pandas.read_csv', return_value=mock_data_frame), \
             patch('matplotlib.pyplot.show') as mock_show:
 
-        art.draw()
+        art._draw()
 
-    #
     assert mock_show.called
