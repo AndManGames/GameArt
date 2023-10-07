@@ -52,7 +52,8 @@ def _on_key_release(key: Key | KeyCode | None) -> Any:
 
     data_frame_keys_pressed.loc[len(data_frame_keys_pressed.index)] = [  # type: ignore
         str(key).replace("'", ""), str(time_taken)]
-    
+
+
 def _record() -> None:
     """
     Starts the listener of pynput to record keys pressed.
