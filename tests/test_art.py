@@ -7,7 +7,7 @@ from gameart.draw import art
 from gameart.utils import utils
 
 
-def test_draw():
+def test_draw_dots():
     """
     Case 1: Mock external dependencies, check if expected values are returned and
     verify that matplotlib.pyplot.show() was called to display the plot.
@@ -22,6 +22,6 @@ def test_draw():
             patch('pandas.read_csv', return_value=mock_data_frame), \
             patch('matplotlib.pyplot.show') as mock_show:
 
-        art._draw()
+        art._draw_dots()
 
     assert mock_show.called
