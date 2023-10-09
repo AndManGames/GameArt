@@ -7,19 +7,17 @@ from PIL import Image, ImageDraw
 from gameart.utils import utils
 
 
-def _map_duration_to_color(duration: float) -> Tuple[int, int, int]:
-    color_ranges = {
-        (0.0, 0.1): (255, 0, 0),     # Red
-        (0.1, 0.2): (0, 255, 0),     # Green
-        (0.2, 0.3): (0, 0, 255),     # Blue
-        (0.3, 0.4): (255, 255, 0),   # Yellow
-        (0.4, 0.5): (0, 255, 255)    # Cyan
-    }
+def _map_duration_to_color(duration: float, df: pd.DataFrame) -> Tuple[int, int, int]:
+    colormap = plt.get_cmap('viridis')
     
-    for (min_val, max_val), color in color_ranges.items():
-        if min_val <= duration < max_val:
-            return color
-    return (0, 0, 0)  # Default color for unmatched values
+    normalized_duration = (duration - df['Duration'].min()) / (df['Duration'].max() - df['Duration'].min())
+    rgba_color = colormap(normalized_duration)
+    
+    red = int(255 * rgba_color[0])
+    green = int(255 * rgba_color[1])
+    blue = int(255 * rgba_color[2])
+
+    return (red, green, blue)
 
 
 def _draw_dots() -> None:
@@ -57,7 +55,7 @@ def _draw_lines() -> None:
 
     x, y = canvas_size // 2, canvas_size // 2
     speed = 15
-    current_thickness = 10
+    current_thickness = 5
 
     git_root_path = utils._get_git_root_path()
     csv_file = utils._get_latest_csv_file(git_root_path)
@@ -76,7 +74,7 @@ def _draw_lines() -> None:
             x_new = max(0, min(x_new, canvas_size - 1))
             y_new = max(0, min(y_new, canvas_size - 1))
             
-            current_color = _map_duration_to_color(duration)
+            current_color = _map_duration_to_color(duration, data_frame_keys_pressed)
             
             draw.line([(x, y), (x_new, y_new)], fill=current_color, width=current_thickness)
             
