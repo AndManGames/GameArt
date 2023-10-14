@@ -19,7 +19,8 @@ dependencies = [
   'fire >= 0.5.0',
   'matplotlib >=3.8.0',
   'pandas >= 2.1.1',
-  'pynput >= 1.7.6'
+  'pynput >= 1.7.6',
+  'pytest >= 7.4.2'
 ]
 
 [project.scripts]

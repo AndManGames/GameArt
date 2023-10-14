@@ -11,8 +11,14 @@ def _get_git_root_path() -> Path:
     Returns:
         str: string with the root path of the current git repository
     """
-    return Path(subprocess.Popen(['git', 'rev-parse', '--show-toplevel'],
-                stdout=subprocess.PIPE).communicate()[0].rstrip().decode('utf-8'))
+    return Path(
+        subprocess.Popen(
+            ["git", "rev-parse", "--show-toplevel"], stdout=subprocess.PIPE
+        )
+        .communicate()[0]
+        .rstrip()
+        .decode("utf-8")
+    )
 
 
 def _get_latest_csv_file(path: Path) -> Path:
@@ -20,7 +26,8 @@ def _get_latest_csv_file(path: Path) -> Path:
     Searches in given path for the csv file which was modified latest
 
     Args:
-        path (Path): Path to folder where csv files, which should be checked, are stored
+        path (Path): Path to folder where csv files, which should be checked,
+        are stored
 
 
     Raises:
@@ -29,7 +36,7 @@ def _get_latest_csv_file(path: Path) -> Path:
     Returns:
         Path: Returns the path to the csv file which was modified latest
     """
-    output_csv_path = path / '*.csv'
+    output_csv_path = path / "*.csv"
 
     list_of_files = glob.glob(str(output_csv_path))
     if len(list_of_files) > 0:
