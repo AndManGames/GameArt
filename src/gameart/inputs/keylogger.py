@@ -67,7 +67,7 @@ def _record() -> None:
     """
     Starts the listener of pynput to record keys pressed.
     """
-    logging.info("Recording start")
+    logging.info("Recording started")
     logging.info("Press 'Esc' to stop recording")
     logging.info("Recording...")
 
