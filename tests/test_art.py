@@ -1,10 +1,10 @@
 from unittest.mock import patch
 
-import matplotlib.pyplot  # ignore import error
+import matplotlib.pyplot  # noqa: F401
 import pandas
 
 from gameart.draw import art
-from gameart.utils import utils
+from gameart.utils import utils  # noqa: F401
 
 
 def test_draw_dots():
