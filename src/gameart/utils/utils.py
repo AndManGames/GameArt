@@ -1,7 +1,9 @@
+import ctypes
 import glob
 import os
 import subprocess
 from pathlib import Path
+from typing import Tuple
 
 
 def _get_git_root_path() -> Path:
@@ -48,3 +50,15 @@ def _get_latest_csv_file(path: Path, filter: str = "") -> Path:
         return latest_file
     else:
         raise FileNotFoundError
+
+
+def _get_screensize() -> Tuple[int, int]:
+    """
+    Returns the screen size as a tuple of width and height in pixels
+
+    Returns:
+        Tuple[int, int]: width, height
+    """
+    return ctypes.windll.user32.GetSystemMetrics(
+        0
+    ), ctypes.windll.user32.GetSystemMetrics(1)
