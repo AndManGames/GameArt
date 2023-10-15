@@ -7,7 +7,9 @@ from PIL import Image, ImageDraw
 from gameart.utils import utils
 
 
-def _map_duration_to_color(duration: float, df: pd.DataFrame) -> Tuple[int, int, int]:
+def _map_duration_to_color(
+    duration: float, df: pd.DataFrame
+) -> Tuple[int, int, int]:
     colormap = plt.get_cmap("viridis")
     normalized_duration = (duration - df["Duration"].min()) / (
         df["Duration"].max() - df["Duration"].min()
@@ -50,6 +52,10 @@ def _draw_dots() -> None:
 
 
 def _draw_lines() -> None:
+    """
+    Draws a figure with PIL where the track of the line is based on WASD input
+    from the keyboard recording
+    """
     canvas_size = 400
     canvas = Image.new("RGB", (canvas_size, canvas_size), (255, 255, 255))
     draw = ImageDraw.Draw(canvas)
@@ -72,12 +78,36 @@ def _draw_lines() -> None:
             x_new, y_new = x + dx * speed, y + dy * speed
             x_new = max(0, min(x_new, canvas_size - 1))
             y_new = max(0, min(y_new, canvas_size - 1))
-            current_color = _map_duration_to_color(duration, data_frame_keys_pressed)
+            current_color = _map_duration_to_color(
+                duration, data_frame_keys_pressed
+            )
             draw.line(
-                [(x, y), (x_new, y_new)], fill=current_color, width=current_thickness
+                [(x, y), (x_new, y_new)],
+                fill=current_color,
+                width=current_thickness,
             )
             x, y = x_new, y_new
         else:
             pass
 
     canvas.show()
+
+
+def _draw_mouse_tracks() -> None:
+    """
+    Draws a matlab figure with the recorded mouse movement displayed as a
+    x-y-diagram
+    """
+    git_root_path = utils._get_git_root_path()
+    csv_file = utils._get_latest_csv_file(git_root_path)
+    data_frame_mouse_movement = pd.read_csv(csv_file, index_col=0)
+
+    data_frame_mouse_movement.plot(
+        x="x-position",
+        y="y-position",
+        legend=False,
+        linewidth=0.5,
+        color="black",
+    )
+    plt.axis("off")
+    plt.show()
