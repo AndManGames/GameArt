@@ -10,6 +10,17 @@ from gameart.utils import utils
 def _map_duration_to_color(
     duration: float, df: pd.DataFrame
 ) -> Tuple[int, int, int]:
+    """
+    Method to map the Duration of a key press to a color
+
+    Args:
+        duration (float): Duration from key press which was recorded
+        df (pd.DataFrame): Dataframe which was parsed from the keylogger
+
+    Returns:
+        Tuple[int, int, int]: Tuple of the three colors red, green and blue
+            which where mapped based on the key press duration
+    """
     colormap = plt.get_cmap("viridis")
     normalized_duration = (duration - df["Duration"].min()) / (
         df["Duration"].max() - df["Duration"].min()

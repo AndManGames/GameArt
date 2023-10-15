@@ -10,6 +10,10 @@ from gameart.api import (
 
 
 def main():
+    """
+    Main method of the command line interface. Provides the interface to all
+    public methods which can be used by the user of this python package
+    """
     fire.Fire(
         {
             "record_keyboard": record_keyboard,
