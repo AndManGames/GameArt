@@ -119,6 +119,10 @@ def _draw_mouse_tracks() -> None:
         legend=False,
         linewidth=0.5,
         color="black",
+        figsize=(
+            utils._get_screensize()[0] / 100,
+            utils._get_screensize()[1] / 100,
+        ),
     )
     plt.axis("off")
     plt.show()
