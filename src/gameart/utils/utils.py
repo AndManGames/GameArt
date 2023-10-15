@@ -21,22 +21,26 @@ def _get_git_root_path() -> Path:
     )
 
 
-def _get_latest_csv_file(path: Path) -> Path:
+def _get_latest_csv_file(path: Path, filter: str = "") -> Path:
     """
     Searches in given path for the csv file which was modified latest
 
     Args:
         path (Path): Path to folder where csv files, which should be checked,
-        are stored
+            are stored
+        filter (str): keyword which should be used to filter the csv files.
+            Defaults to ''
 
 
     Raises:
         FileNotFoundError: Raises exception if no csv file exists in given path
 
     Returns:
-        Path: Returns the path to the csv file which was modified latest
+        Path: Returns the path to the csv file which was modified latest. If
+            filter argument is used it returns the last modified file which
+            contains the keyword given
     """
-    output_csv_path = path / "*.csv"
+    output_csv_path = path / f"*{filter}*.csv"
 
     list_of_files = glob.glob(str(output_csv_path))
     if len(list_of_files) > 0:

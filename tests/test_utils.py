@@ -81,3 +81,24 @@ def test_get_latest_csv_file_multiple_files(temp_directory: Path) -> None:
 
     latest_file = utils._get_latest_csv_file(temp_directory)
     assert latest_file == csv_file3
+
+
+def test_get_latest_csv_file_with_filter(
+    temp_directory: Path,
+) -> None:
+    """
+    Case 4: Create two CSV file in the directory. One with and one without a
+    keyword. Checks if the file with the given filter argument is selected.
+
+    Args:
+        temp_directory (Path): Path to temporary directory where csv files are
+        stored
+    """
+    csv_file1 = temp_directory / "test.csv"
+    csv_file1.touch()
+
+    csv_file2 = temp_directory / "test_keyword.csv"
+    csv_file2.touch()
+
+    latest_file = utils._get_latest_csv_file(temp_directory, "keyword")
+    assert latest_file == csv_file2

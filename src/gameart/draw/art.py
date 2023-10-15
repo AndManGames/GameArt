@@ -41,7 +41,7 @@ def _draw_dots() -> None:
     _, ax = plt.subplots()
 
     git_root_path = utils._get_git_root_path()
-    csv_file = utils._get_latest_csv_file(git_root_path)
+    csv_file = utils._get_latest_csv_file(git_root_path, "keylogger")
     data_frame_keys_pressed = pd.read_csv(csv_file)
 
     color_palette = ["red", "blue", "green", "yellow", "purple", "orange"]
@@ -76,7 +76,7 @@ def _draw_lines() -> None:
     current_thickness = 5
 
     git_root_path = utils._get_git_root_path()
-    csv_file = utils._get_latest_csv_file(git_root_path)
+    csv_file = utils._get_latest_csv_file(git_root_path, "keylogger")
     data_frame_keys_pressed = pd.read_csv(csv_file)
 
     directions = {"w": (0, -1), "a": (-1, 0), "s": (0, 1), "d": (1, 0)}
@@ -110,7 +110,7 @@ def _draw_mouse_tracks() -> None:
     x-y-diagram
     """
     git_root_path = utils._get_git_root_path()
-    csv_file = utils._get_latest_csv_file(git_root_path)
+    csv_file = utils._get_latest_csv_file(git_root_path, "mousetracker")
     data_frame_mouse_movement = pd.read_csv(csv_file, index_col=0)
 
     data_frame_mouse_movement.plot(
