@@ -24,6 +24,8 @@ def _on_key_press(key: Key | KeyCode | None) -> None:
     global time_start_key_press
     time_start_key_press = time.time()
 
+    logging.info(f"{key} pressed")
+
 
 def _on_key_release(key: Key | KeyCode | None) -> Any:
     """
@@ -41,8 +43,9 @@ def _on_key_release(key: Key | KeyCode | None) -> Any:
         for any other key.
     """
     global time_start_key_press, data_frame_keys_pressed
-
     time_taken = round(time.time() - time_start_key_press, 2)
+
+    logging.info(f"{key} released")
 
     if key == keyboard.Key.esc:
         current_time = datetime.datetime.now()

@@ -6,12 +6,10 @@ from typing import Any
 import pandas as pd
 from pynput import mouse
 
-SCREENSIZE = ctypes.windll.user32.GetSystemMetrics(
-    0
-), ctypes.windll.user32.GetSystemMetrics(1)
-PROCESS_PER_MONITOR_DPI_AWARE = 2
+from gameart.utils import utils
 
 # Ensuring consistent coordinates between listener and controller on Windows
+PROCESS_PER_MONITOR_DPI_AWARE = 2
 ctypes.windll.shcore.SetProcessDpiAwareness(PROCESS_PER_MONITOR_DPI_AWARE)
 
 
@@ -29,7 +27,9 @@ def _on_move(x: float, y: float) -> None:
     """
     global data_frame_mouse_movement
 
-    y = abs(y - SCREENSIZE[1])
+    y = abs(
+        y - utils._get_screensize()[1]
+    )  # flip y value, so that bottom of monitor is 0
     logging.info("Pointer moved to {0}".format((x, y)))
 
     data_frame_mouse_movement.loc[
