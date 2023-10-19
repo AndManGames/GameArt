@@ -13,7 +13,6 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    prefix: xvfb-run
     strategy:
       fail-fast: false
       matrix:
@@ -42,5 +41,7 @@ jobs:
         # exit-zero treats all errors as warnings.
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=79 --statistics --exclude ./env
     - name: Test with pytest
-      run: |
-        pytest
+      uses: GabrielBB/xvfb-action@v1
+      with
+        run: |
+          pytest
