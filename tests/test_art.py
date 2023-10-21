@@ -1,4 +1,4 @@
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 import matplotlib.pyplot  # noqa: F401
 import pandas
@@ -29,5 +29,37 @@ def test_draw_dots():
         "matplotlib.pyplot.show"
     ) as mock_show:
         art._draw_dots()
+
+    assert mock_show.called
+
+
+def test_draw_mouse_tracks():
+    """
+    Case 1: Mock external dependencies, check if expected values are returned
+    and verify that matplotlib.pyplot.show() was called to display the plot.
+    """
+    mock_git_root_path = "/mock/git/root/path"
+    mock_csv_file = "/mock/csv/file.csv"
+    mock_data_frame = pandas.DataFrame(
+        {
+            "x-position": [1009, 1004, 1003, 1003],
+            "y-position": [97, 106, 106, 107],
+        }
+    )
+    mock_screensize = Mock(return_value=(1920, 1080))
+
+    with patch(
+        "gameart.utils.utils._get_git_root_path",
+        return_value=mock_git_root_path,
+    ), patch(
+        "gameart.utils.utils._get_latest_csv_file", return_value=mock_csv_file
+    ), patch(
+        "pandas.read_csv", return_value=mock_data_frame
+    ), patch(
+        "gameart.utils.utils._get_screensize", mock_screensize
+    ), patch(
+        "matplotlib.pyplot.show"
+    ) as mock_show:
+        art._draw_mouse_tracks()
 
     assert mock_show.called
