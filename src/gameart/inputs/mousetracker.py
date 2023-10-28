@@ -1,6 +1,8 @@
 import ctypes
 import datetime
 import logging
+import threading
+import time
 from typing import Any
 
 import pandas as pd
@@ -14,30 +16,37 @@ ctypes.windll.shcore.SetProcessDpiAwareness(PROCESS_PER_MONITOR_DPI_AWARE)
 
 
 data_frame_mouse_movement = pd.DataFrame(columns=["x-position", "y-position"])
+data_frame_mutex = threading.Lock()
 
 
-def _on_move(x: float, y: float) -> None:
+def _record_positions(fps: int):
     """
-    Method is called when mouse is moved. Saves the coordinates of each mouse
-    position to a pandas dataframe.
+    Saves the coordinates of the current mouse position every 1/fps seconds to
+    a pandas dataframe.
 
     Args:
-        x (float): x-coordinate of the current mouse position
-        y (float): y-coordinate of the current mouse position
+        fps (int): how many times per second should the mouse position be
+        saved to the pandas data_frame
     """
     global data_frame_mouse_movement
+    while True:
+        with data_frame_mutex:
+            mouse_position = mouse.Controller().position
+            x, y = mouse_position[0], mouse_position[1]
 
-    y = abs(
-        y - utils._get_screensize()[1]
-    )  # flip y value, so that bottom of monitor is 0
-    logging.info("Pointer moved to {0}".format((x, y)))
+            y = abs(
+                y - utils._get_screensize()[1]
+            )  # flip y value, so that bottom of monitor is 0
+            logging.info("Pointer moved to {0}".format((x, y)))
 
-    data_frame_mouse_movement.loc[
-        len(data_frame_mouse_movement.index)
-    ] = [  # type: ignore
-        x,
-        y,
-    ]
+            data_frame_mouse_movement.loc[
+                len(data_frame_mouse_movement.index)
+            ] = [  # type: ignore
+                x,
+                y,
+            ]
+
+        time.sleep(1 / fps)
 
 
 def _on_click(x: float, y: float, button: mouse.Button, pressed: bool) -> Any:
@@ -76,12 +85,18 @@ def _on_click(x: float, y: float, button: mouse.Button, pressed: bool) -> Any:
 def _record() -> None:
     """
     Starts the listener of pynput to record mouse movement and buttons.
+    Uses threading to both detect pynput listener and controller at the same
+    time.
     """
     logging.info("Recording started")
     logging.info("Press Right Mouse Button to stop recording")
     logging.info("Recording...")
 
-    with mouse.Listener(on_move=_on_move, on_click=_on_click) as listener:
+    record_thread = threading.Thread(target=_record_positions(30))
+    record_thread.daemon = True
+    record_thread.start()
+
+    with mouse.Listener(on_click=_on_click) as listener:
         try:
             listener.join()
         except KeyError as e:
