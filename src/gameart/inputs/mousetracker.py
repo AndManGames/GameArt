@@ -21,7 +21,7 @@ record_thread = None
 exit_event = threading.Event()
 
 
-def _record_positions(fps: int):
+def _record_positions(fps: int) -> None:
     """
     Saves the coordinates of the current mouse position every 1/fps seconds to
     a pandas dataframe.
