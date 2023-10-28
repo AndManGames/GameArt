@@ -154,5 +154,6 @@ def _draw_mouse_tracks() -> None:
 
         x_prev, y_prev = x, y
 
+    ax.set_aspect("equal", adjustable="box")
     plt.axis("off")
     plt.show()
