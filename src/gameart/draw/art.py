@@ -136,21 +136,21 @@ def _draw_mouse_tracks() -> None:
         else:
             if count_identical_rows >= 3:
                 # Adjust the radius based on the duration of standstill
-                radius = 10 + count_identical_rows
+                radius = min(100, 10 + count_identical_rows)
 
-                color = str(gray_level / 5)
+                color = str(gray_level / 10)
 
                 # Draw a circle with adjusted radius
                 circle = Circle((x, y), radius, color=color)
                 ax.add_patch(circle)
 
-                gray_level = (gray_level + 1) % 5
+                gray_level = (gray_level + 1) % 10
 
             count_identical_rows = 0
 
         if x_prev is not None and y_prev is not None:
             # Draw a line for mouse movement
-            ax.plot([x_prev, x], [y_prev, y], color="black", linewidth=1)
+            ax.plot([x_prev, x], [y_prev, y], color="black", linewidth=0.5)
 
         x_prev, y_prev = x, y
 
