@@ -2,6 +2,7 @@ from typing import Tuple
 
 import matplotlib.pyplot as plt
 import pandas as pd
+from matplotlib.patches import Circle
 from PIL import Image, ImageDraw
 
 from gameart.utils import utils
@@ -107,22 +108,52 @@ def _draw_lines() -> None:
 def _draw_mouse_tracks() -> None:
     """
     Draws a matlab figure with the recorded mouse movement displayed as a
-    x-y-diagram
+    x-y-diagram. The movement will be drawn with lines and the mouse
+    standstill positions will be drawn as circles, which vary in size
+    according to the standstill duration on each position
     """
+    _, ax = plt.subplots(
+        figsize=(
+            utils._get_screensize()[0] / 100,
+            utils._get_screensize()[1] / 100,
+        )
+    )
+
     git_root_path = utils._get_git_root_path()
     csv_file = utils._get_latest_csv_file(git_root_path, "mousetracker")
     data_frame_mouse_movement = pd.read_csv(csv_file, index_col=0)
 
-    data_frame_mouse_movement.plot(
-        x="x-position",
-        y="y-position",
-        legend=False,
-        linewidth=0.5,
-        color="black",
-        figsize=(
-            utils._get_screensize()[0] / 100,
-            utils._get_screensize()[1] / 100,
-        ),
-    )
+    x_prev, y_prev = None, None
+    count_identical_rows = 0
+    radius = 10
+    gray_level = 0
+
+    for _, row in data_frame_mouse_movement.iterrows():
+        x, y = row["x-position"], row["y-position"]
+
+        if x == x_prev and y == y_prev:
+            count_identical_rows += 1
+        else:
+            if count_identical_rows >= 3:
+                # Adjust the radius based on the duration of standstill
+                radius = 10 + count_identical_rows
+
+                color = str(gray_level / 5)
+
+                # Draw a circle with adjusted radius
+                circle = Circle((x, y), radius, color=color)
+                ax.add_patch(circle)
+
+                gray_level = (gray_level + 1) % 5
+
+            count_identical_rows = 0
+
+        if x_prev is not None and y_prev is not None:
+            # Draw a line for mouse movement
+            ax.plot([x_prev, x], [y_prev, y], color="black", linewidth=1)
+
+        x_prev, y_prev = x, y
+
+    ax.set_aspect("equal", adjustable="box")
     plt.axis("off")
     plt.show()
