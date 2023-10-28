@@ -14,9 +14,11 @@ from gameart.utils import utils
 PROCESS_PER_MONITOR_DPI_AWARE = 2
 ctypes.windll.shcore.SetProcessDpiAwareness(PROCESS_PER_MONITOR_DPI_AWARE)
 
-
 data_frame_mouse_movement = pd.DataFrame(columns=["x-position", "y-position"])
 data_frame_mutex = threading.Lock()
+
+record_thread = None
+exit_event = threading.Event()
 
 
 def _record_positions(fps: int):
@@ -29,7 +31,7 @@ def _record_positions(fps: int):
         saved to the pandas data_frame
     """
     global data_frame_mouse_movement
-    while True:
+    while not exit_event.is_set():
         with data_frame_mutex:
             mouse_position = mouse.Controller().position
             x, y = mouse_position[0], mouse_position[1]
@@ -53,6 +55,7 @@ def _on_click(x: float, y: float, button: mouse.Button, pressed: bool) -> Any:
     """
     Method is called when a mouse button is clicked. Stops recording on
     right mouse button click.
+    Therefore it sets the exit event for the record_thread.
 
     Args:
         x (float): x-coordinate of the current mouse position
@@ -70,6 +73,8 @@ def _on_click(x: float, y: float, button: mouse.Button, pressed: bool) -> Any:
         "{0} at {1}".format("Pressed" if pressed else "Released", (x, y))
     )
     if pressed and button == mouse.Button.right:
+        exit_event.set()
+
         current_time = datetime.datetime.now()
         formatted_time = current_time.strftime("%Y-%m-%d_%H-%M-%S")
         file_name = f"mousetracker_{formatted_time}.csv"
@@ -92,12 +97,10 @@ def _record() -> None:
     logging.info("Press Right Mouse Button to stop recording")
     logging.info("Recording...")
 
+    listener = mouse.Listener(on_click=_on_click)
+    listener.start()
+
+    global record_thread
     record_thread = threading.Thread(target=_record_positions(30))
     record_thread.daemon = True
     record_thread.start()
-
-    with mouse.Listener(on_click=_on_click) as listener:
-        try:
-            listener.join()
-        except KeyError as e:
-            logging.error("{0} was clicked".format(e.args[0]))
