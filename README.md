@@ -1,2 +1,2 @@
 # GameArt
-Create printable art from gameplay input.
+Create printable art from your mouse movement.

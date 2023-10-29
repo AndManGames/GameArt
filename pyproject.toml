@@ -8,11 +8,14 @@ version = "0.0.3"
 authors = [
   { name="Andreas Schneider", email="author@example.com" },
 ]
-description = "Create printable art from gameplay input."
+description = "Create printable art from your mouse movement."
 readme = "README.md"
 requires-python = ">=3.10"
 classifiers = [
     "Programming Language :: Python :: 3",
+	"Programming Language :: Python :: 3.10",
+	"Programming Language :: Python :: 3.11",
+	"Programming Language :: Python :: 3.12",
     "Operating System :: OS Independent",
 ]
 dependencies = [
