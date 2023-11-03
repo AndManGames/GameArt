@@ -42,6 +42,7 @@ exclude = '''
 | \.hg
 | \.mypy_cache
 | \.tox
+| \.env
 | \.venv
 | _build
 | buck-out
@@ -51,10 +52,13 @@ exclude = '''
 
 [tool.flake8]
 max-line-length = 79
-exclude = [".git", "__pycache__", "dist"]
+exclude = [".git", "__pycache__", "dist", "env", "venv"]
 
 [tool.isort]
 atomic = true
 profile = "black"
 line_length = 79
 skip_gitignore = true
+
+[tool.mypy]
+exclude = ["env", "venv"]
