@@ -44,6 +44,7 @@ exclude = '''
 | \.tox
 | \.env
 | \.venv
+| \.venv_gameart
 | _build
 | buck-out
 | build
@@ -52,7 +53,7 @@ exclude = '''
 
 [tool.flake8]
 max-line-length = 79
-exclude = [".git", "__pycache__", "dist", "env", "venv"]
+exclude = [".git", "__pycache__", "dist", "env", "venv", "venv_gameart"]
 
 [tool.isort]
 atomic = true
@@ -61,4 +62,4 @@ line_length = 79
 skip_gitignore = true
 
 [tool.mypy]
-exclude = ["env", "venv"]
+exclude = ["env", "venv", "venv_gameart"]
