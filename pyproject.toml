@@ -12,11 +12,11 @@ description = "Create printable art from your mouse movement."
 readme = "README.md"
 requires-python = ">=3.10"
 classifiers = [
-    "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3",
 	"Programming Language :: Python :: 3.10",
 	"Programming Language :: Python :: 3.11",
 	"Programming Language :: Python :: 3.12",
-    "Operating System :: OS Independent",
+  "Operating System :: OS Independent",
 ]
 dependencies = [
   'fire >= 0.5.0',
@@ -24,7 +24,7 @@ dependencies = [
   'pandas >= 2.1.1',
   'pynput >= 1.7.6',
   'pytest >= 7.4.2',
-  'detect-secrets >= 1.4.0'
+  'pre-commit >= 3.5.0'
 ]
 
 [project.scripts]
@@ -42,7 +42,9 @@ exclude = '''
 | \.hg
 | \.mypy_cache
 | \.tox
+| \.env
 | \.venv
+| \.venv_gameart
 | _build
 | buck-out
 | build
@@ -51,10 +53,13 @@ exclude = '''
 
 [tool.flake8]
 max-line-length = 79
-exclude = [".git", "__pycache__", "dist"]
+exclude = [".git", "__pycache__", "dist", "env", "venv", "venv_gameart"]
 
 [tool.isort]
 atomic = true
 profile = "black"
 line_length = 79
 skip_gitignore = true
+
+[tool.mypy]
+exclude = ["env", "venv", "venv_gameart"]
