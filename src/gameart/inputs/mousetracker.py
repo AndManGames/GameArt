@@ -87,7 +87,7 @@ def _on_click(x: float, y: float, button: mouse.Button, pressed: bool) -> Any:
         return False
 
 
-def _record() -> None:
+def _record_mouse() -> None:
     """
     Starts the listener of pynput to record mouse movement and buttons.
     Uses threading to both detect pynput listener and controller at the same
