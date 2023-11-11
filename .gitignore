@@ -164,5 +164,8 @@ cython_debug/
 # project specific files
 *.csv
 
+# project specific folders
+gameart_images/
+
 # VS Code
 settings.json
