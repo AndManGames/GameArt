@@ -21,6 +21,7 @@ def test_draw_mouse_tracks():
         }
     )
     mock_screensize = Mock(return_value=(1920, 1080))
+    mock_output_folder = Mock("/mock/git/root/path/gameart_images")
 
     with patch(
         "gameart.utils.utils._get_git_root_path",
@@ -32,8 +33,10 @@ def test_draw_mouse_tracks():
     ), patch(
         "gameart.utils.utils._get_screensize", mock_screensize
     ), patch(
-        "matplotlib.pyplot.show"
-    ) as mock_show:
+        "gameart.utils.utils._create_output_folder", mock_output_folder
+    ), patch(
+        "matplotlib.pyplot.savefig"
+    ) as mock_save:
         art._draw_mouse_tracks()
 
-    assert mock_show.called
+    assert mock_save.called
