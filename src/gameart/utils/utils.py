@@ -62,3 +62,14 @@ def _get_screensize() -> Tuple[int, int]:
     return ctypes.windll.user32.GetSystemMetrics(
         0
     ), ctypes.windll.user32.GetSystemMetrics(1)
+
+
+def _create_output_folder(output_path: Path, folder_name: str) -> None:
+    """
+    Creates output folder for the given path.
+
+    Args:
+        output_path (Path): path to output directory
+        folder_name (str): name of folder which shall be created
+    """
+    os.mkdir(output_path / Path(folder_name))

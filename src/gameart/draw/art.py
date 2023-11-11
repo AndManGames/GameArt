@@ -1,3 +1,5 @@
+import datetime
+
 import matplotlib.pyplot as plt
 import pandas as pd
 from matplotlib.patches import Circle
@@ -10,7 +12,8 @@ def _draw_mouse_tracks() -> None:
     Draws a matlab figure with the recorded mouse movement displayed as a
     x-y-diagram. The movement will be drawn with lines and the mouse
     standstill positions will be drawn as circles, which vary in size
-    according to the standstill duration on each position
+    according to the standstill duration on each position.
+    The picture will be saved to the output folder.
     """
     _, ax = plt.subplots(
         figsize=(
@@ -56,4 +59,11 @@ def _draw_mouse_tracks() -> None:
 
     ax.set_aspect("equal", adjustable="box")
     plt.axis("off")
-    plt.show()
+
+    output_folder_name = "gameart_images"
+    utils._create_output_folder(git_root_path, output_folder_name)
+
+    current_time = datetime.datetime.now()
+    formatted_time = current_time.strftime("%Y-%m-%d_%H-%M-%S")
+    file_name = f"gameart_{formatted_time}.csv"
+    plt.savefig(f"{output_folder_name}/{file_name}.png")
