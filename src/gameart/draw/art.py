@@ -65,5 +65,5 @@ def _draw_mouse_tracks() -> None:
 
     current_time = datetime.datetime.now()
     formatted_time = current_time.strftime("%Y-%m-%d_%H-%M-%S")
-    file_name = f"gameart_{formatted_time}.csv"
+    file_name = f"gameart_{formatted_time}"
     plt.savefig(f"{output_folder_name}/{file_name}.png")
