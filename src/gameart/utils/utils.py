@@ -72,4 +72,5 @@ def _create_output_folder(output_path: Path, folder_name: str) -> None:
         output_path (Path): path to output directory
         folder_name (str): name of folder which shall be created
     """
-    os.mkdir(output_path / Path(folder_name))
+    if not os.path.exists(output_path / Path(folder_name)):
+        os.mkdir(output_path / Path(folder_name))
