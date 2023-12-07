@@ -10,7 +10,7 @@ def record_mouse() -> None:
     try:
         import pynput  # noqa
     except ModuleNotFoundError:
-        print("Try to run: pip install gameart[with-record]")
+        print("Try to run: pip install gameart[full]")
 
     from gameart.inputs import mousetracker
 
