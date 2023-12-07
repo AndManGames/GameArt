@@ -79,8 +79,7 @@ To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
-Supported python versions:
-* Python 3.10, 3.11, 3.12
+* Supported python versions: Python 3.10, 3.11, 3.12
 * Upgrade pip
   ```sh
   pip install --upgrade pip
@@ -117,21 +116,21 @@ Supported python versions:
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Start recording your mouse movement:
+* Start recording your mouse movement:
    ```sh
    gameart record
    ```
-Stop the recording by pressing the "Right Mouse Button"
+* Stop the recording by pressing the `Right Mouse Button`
 
-Generate image from your mouse recording:
+* Generate image from your mouse recording:
    ```sh
    gameart draw
    ```
- Specifying no argument will try to search for a mouse recording inside you git root path.
- Optionally you can specify a csv file path by using the argument `--csv_file_path`
-   ```sh
-   gameart draw --csv_file_path path/to/csv/file
-   ```
+    * Specifying no argument will try to search for a mouse recording inside you git root path.
+    * Optionally you can specify a csv file path by using the argument `--csv_file_path`
+    ```sh
+    gameart draw --csv_file_path path/to/csv/file
+    ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -155,9 +154,9 @@ If you have a suggestion that would make this better, please fork the repo and c
 Don't forget to give the project a star! Thanks again!
 
 For contributing please use the dev setup of this package:
-```sh
-   pip install .[dev]
-   ```
+  ```sh
+  pip install .[dev]
+  ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
