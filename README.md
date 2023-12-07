@@ -70,11 +70,11 @@ To get a local copy up and running follow these simple example steps.
     ```sh
     python -m venv env
     ```
-    * Activate virtual environment Linux
+    * Activate virtual environment - Linux
     ```sh
     source env/bin/activate
     ```
-    * Activate virtual environment Windows
+    * Activate virtual environment - Windows
     ```sh
     env/Scripts/activate
     ```
@@ -101,7 +101,7 @@ To get a local copy up and running follow these simple example steps.
    ```sh
    gameart record
    ```
-* Stop the recording by pressing the `Right Mouse Button`
+* **Stop the recording** by pressing the `Right Mouse Button`
 
 * Generate image from your mouse recording:
    ```sh
