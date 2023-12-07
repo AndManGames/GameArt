@@ -32,7 +32,7 @@ jobs:
         echo "VIRTUAL ENV:" $VIRTUAL_ENV
     - name: Install dependencies
       run: |
-        python -m pip install .
+        python -m pip install .[dev]
     - name: Check with pre-commit (Formatting, Linting, etc.)
       run: |
         pre-commit run --all-files
