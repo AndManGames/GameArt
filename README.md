@@ -86,14 +86,19 @@ There are 3 package versions available:
 
 ### Installation
 
-1. Clone the repo
-   ```sh
-   git clone https://github.com/AndManGames/GameArt.git
-   ```
-2. Install gameart packages from git root path
-   ```sh
-   pip install .[full]
-   ```
+1. From GitHub:
+  1. Clone the repo
+    ```sh
+    git clone https://github.com/AndManGames/GameArt.git
+    ```
+  2. Install gameart packages from git root path
+    ```sh
+    pip install .[full]
+    ```
+2. From Pypi:
+  ```sh
+  pip install gameart[full]
+  ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -110,12 +115,12 @@ There are 3 package versions available:
 
 * Generate image from your mouse recording:
    ```sh
-   gameart draw
+   gameart draw --csv_file_path path/to/csv/file
    ```
-    * Specifying no argument will try to search for a mouse recording inside you git root path.
-    * Optionally you can specify a csv file path by using the argument `--csv_file_path`
+    * If no output folder is specified the image will be saved to the current_dir/gameart_images.
+    * Optionally you can specify an output folder (absolute path) by using the argument `--output_folder`.
     ```sh
-    gameart draw --csv_file_path path/to/csv/file
+    gameart draw --csv_file_path path/to/csv/file --output_folder path/to/output/folder
     ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
