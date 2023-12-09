@@ -87,11 +87,11 @@ There are 3 package versions available:
 ### Installation
 
 1. From GitHub:
-  1. Clone the repo
+    1. Clone the repo
     ```sh
     git clone https://github.com/AndManGames/GameArt.git
     ```
-  2. Install gameart packages from git root path
+    2. Install gameart packages from git root path
     ```sh
     pip install .[full]
     ```
