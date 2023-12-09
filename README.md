@@ -17,7 +17,7 @@
 <h3 align="center">GameArt</h3>
 
   <p align="center">
-    Create printable art from your mouse movement.
+    Create printable art with the movement of your mouse.
     <br />
     <a href="https://github.com/AndManGames/GameArt"><strong>Explore the source code »</strong></a>
     <br />
@@ -55,8 +55,13 @@
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+GameArt is still work in progress. Currently it is possible to create a png-file with matplotlib from the recorded mouse movement using pynput. The "Art" aspect is currently missing, but I will work on that.
+
+There are 3 package versions available:
+* gameart: This version contains only the possibility to draw a png based on csv input. Also there is no CLI.
+* gameart[full]: This version contains additionally the possibility to record your mouse movement and save it as a csv. Also it has a CLI.
+* gameart[dev]: Same as [full] but with additional dev packages to be able to contribute to this project.
+
 
 ### Prerequisites
 
