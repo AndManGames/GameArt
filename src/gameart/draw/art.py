@@ -9,7 +9,7 @@ from matplotlib.patches import Circle
 from gameart.utils import utils
 
 
-def _draw_mouse_tracks(csv_file_path: str = "") -> None:
+def _draw_mouse_tracks(csv_file_path: str, output_folder: str = "") -> None:
     """
     Draws a matlab figure with the recorded mouse movement displayed as a
     x-y-diagram. The movement will be drawn with lines and the mouse
@@ -18,10 +18,21 @@ def _draw_mouse_tracks(csv_file_path: str = "") -> None:
     The picture will be saved to the output folder.
 
     Args:
-        csv_file_path (str): optional argument to provide csv_file_path.
-        If csv_file_path is not specified, csv file will be searched in
-        git root path
+        csv_file_path (str): argument to provide path to csv file.
+            If csv_file_path is not specified, csv file will be searched in
+            the current working directory
+        output_folder (str, optional): argument to provide an output path.
+            If output_folder is not specified, the output image will be stored
+            in the current working directory
     """
+    if output_folder == "":
+        output_path = Path(".")
+    else:
+        output_path = Path(output_folder)
+
+    csv_file = Path(csv_file_path)
+    data_frame_mouse_movement = pd.read_csv(csv_file, index_col=0)
+
     if platform.system() == "Windows":
         _, ax = plt.subplots(
             figsize=(
@@ -32,14 +43,6 @@ def _draw_mouse_tracks(csv_file_path: str = "") -> None:
     else:
         screensize_default = (1920 / 100, 1080 / 100)
         _, ax = plt.subplots(figsize=screensize_default)
-
-    git_root_path = utils._get_git_root_path()
-    csv_file = Path(".")
-    if csv_file_path == "":
-        csv_file = utils._get_latest_csv_file(git_root_path, "mousetracker")
-    else:
-        csv_file = Path(csv_file_path)
-    data_frame_mouse_movement = pd.read_csv(csv_file, index_col=0)
 
     x_prev, y_prev = None, None
     count_identical_rows = 0
@@ -76,13 +79,13 @@ def _draw_mouse_tracks(csv_file_path: str = "") -> None:
     plt.axis("off")
 
     output_folder_name = "gameart_images"
-    utils._create_output_folder(git_root_path, output_folder_name)
+    utils._create_output_folder(output_path, output_folder_name)
 
     current_time = datetime.datetime.now()
     formatted_time = current_time.strftime("%Y-%m-%d_%H-%M-%S")
     file_name = f"gameart_{formatted_time}"
 
     try:
-        plt.savefig(f"{output_folder_name}/{file_name}.png")
+        plt.savefig(f"{output_path}/{output_folder_name}/{file_name}.png")
     except FileExistsError as e:
         print("Error: %s - %s." % (e.filename, e.strerror))
