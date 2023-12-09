@@ -95,7 +95,7 @@ There are 3 package versions available:
     ```sh
     pip install .[full]
     ```
-2. From Pypi:
+2. From PyPi:
   ```sh
   pip install gameart[full]
   ```
