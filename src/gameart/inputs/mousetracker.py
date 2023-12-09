@@ -80,9 +80,10 @@ def _on_click(x: float, y: float, button: mouse.Button, pressed: bool) -> Any:
         file_name = f"mousetracker_{formatted_time}.csv"
 
         logging.info("Recording stopped")
-        logging.info(f"Log saved to {file_name}")
 
         data_frame_mouse_movement.to_csv(file_name, sep=",", encoding="utf-8")
+
+        logging.info(f"Log saved to {file_name}")
 
         return False
 
