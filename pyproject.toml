@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "gameart"
-version = "0.0.10"
+version = "0.0.11"
 authors = [
   { name="Andreas Schneider", email="author@example.com" },
 ]
@@ -19,18 +19,19 @@ classifiers = [
   "Operating System :: OS Independent",
 ]
 dependencies = [
-  'fire >= 0.5.0',
-  'matplotlib >=3.8.0',
-  'pandas >= 2.1.1',
+  'matplotlib',
+  'pandas',
 ]
 
 [project.optional-dependencies]
 dev = [
+  'fire >= 0.5.0',
   'pytest >= 7.4.2',
   'pre-commit >= 3.5.0',
   'pynput >= 1.7.6'
   ]
 full = [
+  'fire >= 0.5.0',
   'pynput >= 1.7.6'
 ]
 
