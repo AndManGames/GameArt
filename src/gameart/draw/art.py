@@ -1,4 +1,5 @@
 import datetime
+import platform
 from pathlib import Path
 
 import matplotlib.pyplot as plt
@@ -21,12 +22,17 @@ def _draw_mouse_tracks(csv_file_path: str = "") -> None:
         If csv_file_path is not specified, csv file will be searched in
         git root path
     """
-    _, ax = plt.subplots(
-        figsize=(
-            utils._get_screensize()[0] / 100,
-            utils._get_screensize()[1] / 100,
+    if platform.system() == "Windows":
+        _, ax = plt.subplots(
+            figsize=(
+                utils._get_screensize()[0] / 100,
+                utils._get_screensize()[1] / 100,
+            )
         )
-    )
+    else:
+        screensize_default = (1920 / 100, 1080 / 100)
+        _, ax = plt.subplots(figsize=screensize_default)
+
     git_root_path = utils._get_git_root_path()
     csv_file = Path(".")
     if csv_file_path == "":
