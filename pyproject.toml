@@ -4,11 +4,11 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "gameart"
-version = "0.0.13"
+version = "0.0.14"
 authors = [
   { name="Andreas Schneider", email="author@example.com" },
 ]
-description = "Create printable art from your mouse movement."
+description = "Create printable art with the movement of your mouse."
 readme = "README.md"
 requires-python = ">=3.10"
 classifiers = [
@@ -19,21 +19,17 @@ classifiers = [
   "Operating System :: OS Independent",
 ]
 dependencies = [
-  'matplotlib',
-  'pandas',
+  'matplotlib >= 3.8.0',
+  'pandas >= 2.1.1',
+  'fire >= 0.5.0',
+  'pynput >= 1.7.6'
 ]
 
 [project.optional-dependencies]
 dev = [
-  'fire >= 0.5.0',
   'pytest >= 7.4.2',
   'pre-commit >= 3.5.0',
-  'pynput >= 1.7.6'
   ]
-full = [
-  'fire >= 0.5.0',
-  'pynput >= 1.7.6'
-]
 
 [project.scripts]
 gameart = "gameart.cli:main"

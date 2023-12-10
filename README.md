@@ -57,10 +57,9 @@
 
 GameArt is still work in progress. Currently it is possible to create a png-file with matplotlib from the recorded mouse movement using pynput. The "Art" aspect is currently missing, but I will work on that.
 
-There are 3 package versions available:
-* gameart: This version contains only the possibility to draw a png based on csv input. Also there is no CLI.
-* gameart[full]: This version contains additionally the possibility to record your mouse movement and save it as a csv. Also it has a CLI.
-* gameart[dev]: Same as [full] but with additional dev packages to be able to contribute to this project.
+There are 2 package versions available:
+* gameart: This version is targeting the end user version with the possibility to record your mouse movement, save it as a csv and draw a png based on csv input.
+* gameart[dev]: This version has additional dev packages to be able to contribute to this project.
 
 
 ### Prerequisites
@@ -93,11 +92,11 @@ There are 3 package versions available:
     ```
     2. Install gameart packages from git root path
     ```sh
-    pip install .[full]
+    pip install .
     ```
 2. From PyPi:
   ```sh
-  pip install gameart[full]
+  pip install gameart
   ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
