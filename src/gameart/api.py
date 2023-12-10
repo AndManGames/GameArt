@@ -24,3 +24,12 @@ def draw_mouse_tracks(csv_file_path: str, output_folder: str = "") -> None:
     from gameart.draw import art
 
     art._draw_mouse_tracks(csv_file_path, output_folder=output_folder)
+
+
+def start_gui() -> None:
+    """
+    Public function to start the GUI of gameart.
+    """
+    from gameart.gui import start_gui
+
+    start_gui()

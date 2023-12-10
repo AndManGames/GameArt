@@ -1,6 +1,6 @@
 import fire
 
-from gameart.api import draw_mouse_tracks, record_mouse
+from gameart.api import draw_mouse_tracks, record_mouse, start_gui
 
 
 def main():
@@ -12,6 +12,7 @@ def main():
         {
             "record": record_mouse,
             "draw": draw_mouse_tracks,
+            "start_gui": start_gui,
         }
     )
 
