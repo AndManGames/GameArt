@@ -7,11 +7,6 @@ def record_mouse() -> None:
     """
     Public function to start recording of mouse input
     """
-    try:
-        import pynput  # noqa
-    except ModuleNotFoundError:
-        print("Try to run: pip install gameart[full]")
-
     from gameart.inputs import mousetracker
 
     mousetracker._record_mouse()
