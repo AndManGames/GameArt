@@ -6,7 +6,9 @@ from pathlib import Path
 from PyQt5.QtWidgets import (
     QApplication,
     QFileDialog,
+    QGridLayout,
     QLabel,
+    QListWidget,
     QPushButton,
     QTabWidget,
     QVBoxLayout,
@@ -32,7 +34,7 @@ class MainWindow(QWidget):
         self.setWindowTitle(
             f"GameArt - {importlib.metadata.version('gameart')}"
         )
-        self.resize(270, 150)
+        self.resize(300, 150)
         layout = QVBoxLayout()
         self.setLayout(layout)
 
@@ -42,7 +44,6 @@ class MainWindow(QWidget):
 
         tabs = QTabWidget()
         tabs.addTab(self.main_tab(), "Record and Generate")
-        tabs.addTab(self.manage_recordings_tab(), "My local recordings")
         layout.addWidget(tabs)
         layout.addStretch()
 
@@ -51,19 +52,23 @@ class MainWindow(QWidget):
     def main_tab(self):
         """Create the main page."""
         mainTab = QWidget()
-        layout = QVBoxLayout()
+        layout = QGridLayout()
 
         btn_select_output_folder = QPushButton("Select Output Folder")
         btn_select_output_folder.clicked.connect(self.select_output_folder)
-        layout.addWidget(btn_select_output_folder)
+        layout.addWidget(btn_select_output_folder, 0, 0)
 
         btn_start_record = QPushButton("Start Recording")
         btn_start_record.clicked.connect(self.execute_record)
-        layout.addWidget(btn_start_record)
+        layout.addWidget(btn_start_record, 1, 0)
 
         btn_generate_image = QPushButton("Generate Image")
         btn_generate_image.clicked.connect(self.execute_draw)
-        layout.addWidget(btn_generate_image)
+        layout.addWidget(btn_generate_image, 2, 0)
+
+        list_selection = QListWidget()
+        list_selection.addItems(["One", "Two", "Three"])
+        layout.addWidget(list_selection, 0, 1, 3, 1)
 
         mainTab.setLayout(layout)
         return mainTab
