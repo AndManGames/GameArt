@@ -1,4 +1,5 @@
 import datetime
+import logging
 import platform
 from pathlib import Path
 
@@ -6,32 +7,27 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from matplotlib.patches import Circle
 
+from gameart.FileHandler import FileHandlerSingleton
 from gameart.utils import utils
 
+logging.basicConfig(level=logging.INFO)
 
-def _draw_mouse_tracks(csv_file_path: str, output_folder: str = "") -> None:
+
+def _draw_mouse_tracks() -> None:
     """
     Draws a matlab figure with the recorded mouse movement displayed as a
     x-y-diagram. The movement will be drawn with lines and the mouse
     standstill positions will be drawn as circles, which vary in size
     according to the standstill duration on each position.
     The picture will be saved to the output folder.
-
-    Args:
-        csv_file_path (str): argument to provide path to csv file.
-            If csv_file_path is not specified, csv file will be searched in
-            the current working directory
-        output_folder (str, optional): argument to provide an output path.
-            If output_folder is not specified, the output image will be stored
-            in the current working directory
     """
-    if output_folder == "":
-        output_path = Path(".")
-    else:
-        output_path = Path(output_folder)
+    file_handler = FileHandlerSingleton()
+    csv_file = file_handler.csv_file
+    output_path = file_handler.output_path
+    total_path = output_path / Path(csv_file)
 
-    csv_file = Path(csv_file_path)
-    data_frame_mouse_movement = pd.read_csv(csv_file, index_col=0)
+    logging.info("Read csv file...")
+    data_frame_mouse_movement = pd.read_csv(total_path, index_col=0)
 
     if platform.system() == "Windows":
         _, ax = plt.subplots(
@@ -87,5 +83,9 @@ def _draw_mouse_tracks(csv_file_path: str, output_folder: str = "") -> None:
 
     try:
         plt.savefig(f"{output_path}/{output_folder_name}/{file_name}.png")
+        logging.info(
+            "Saved to %s/%s/%s.png"
+            % (output_path, output_folder_name, file_name)
+        )
     except FileExistsError as e:
-        print("Error: %s - %s." % (e.filename, e.strerror))
+        logging.error("Error: %s - %s." % (e.filename, e.strerror))
