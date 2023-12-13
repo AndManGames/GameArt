@@ -1,17 +1,24 @@
 import importlib.metadata
+import logging
 import sys
+from pathlib import Path
 
-from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (
     QApplication,
     QFileDialog,
     QLabel,
-    QMainWindow,
     QPushButton,
+    QTabWidget,
+    QVBoxLayout,
+    QWidget,
 )
 
 from gameart.api import draw_mouse_tracks, record_mouse
+from gameart.FileHandler import FileHandlerSingleton
 from gameart.utils import utils
+
+logging.basicConfig(level=logging.INFO)
+
 
 screen_width = utils._get_screensize()[0]
 screen_height = utils._get_screensize()[1]
@@ -19,93 +26,85 @@ window_width = screen_width // 5
 window_height = screen_height // 3
 
 
-class MainWindow(QMainWindow):
+class MainWindow(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle(
             f"GameArt - {importlib.metadata.version('gameart')}"
         )
-        self.setGeometry(
-            screen_width // 2 - window_width // 2,
-            screen_height // 2 - window_height // 2,
-            window_width,
-            window_height,
+        self.resize(270, 150)
+        layout = QVBoxLayout()
+        self.setLayout(layout)
+
+        layout.addWidget(
+            QLabel(f"{importlib.metadata.metadata('gameart')['summary']}")
         )
 
-        # Create buttons
-        self.select_csv_btn = QPushButton("Select CSV file", self)
-        self.select_csv_btn.clicked.connect(self.select_csv)
-        self.select_output_folder_btn = QPushButton(
-            "Select Output Folder", self
-        )
-        self.select_output_folder_btn.clicked.connect(
-            self.select_output_folder
-        )
-        self.record_btn = QPushButton("Start Recording", self)
-        self.record_btn.clicked.connect(self.execute_record)
-        self.draw_btn = QPushButton("Draw", self)
-        self.draw_btn.clicked.connect(self.execute_draw)
-        self.draw_btn.setEnabled(False)
+        tabs = QTabWidget()
+        tabs.addTab(self.main_tab(), "Record and Generate")
+        tabs.addTab(self.manage_recordings_tab(), "My local recordings")
+        layout.addWidget(tabs)
+        layout.addStretch()
 
-        # Create labels
-        self.subtitle_label = QLabel(
-            f"{importlib.metadata.metadata('gameart')['summary']}", self
-        )
-        self.subtitle_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.subtitle_label.setMinimumHeight(50)
-        self.csv_label = QLabel("", self)
-        self.csv_label.setAlignment(Qt.AlignmentFlag.AlignVCenter)
-        self.csv_label.setMinimumHeight(50)
-        self.output_folder_label = QLabel("", self)
-        self.output_folder_label.setAlignment(Qt.AlignmentFlag.AlignVCenter)
-        self.output_folder_label.setMinimumHeight(50)
+        self.file_handler = FileHandlerSingleton()
 
-        # Set position and size
-        self.subtitle_label.setGeometry(10, 10, window_width, 50)
-        self.record_btn.setGeometry(window_width // 2 - 100, 50, 200, 50)
-        self.select_csv_btn.setGeometry(window_width // 2 - 100, 120, 200, 50)
-        self.csv_label.setGeometry(275, 120, 500, 50)
-        self.select_output_folder_btn.setGeometry(
-            window_width // 2 - 100, 190, 200, 50
-        )
-        self.output_folder_label.setGeometry(275, 190, 500, 50)
-        self.draw_btn.setGeometry(window_width // 2 - 100, 260, 200, 50)
+    def main_tab(self):
+        """Create the main page."""
+        mainTab = QWidget()
+        layout = QVBoxLayout()
 
-        # Path variables
-        self.csv_path = ""
-        self.output_folder_path = ""
+        btn_select_output_folder = QPushButton("Select Output Folder")
+        btn_select_output_folder.clicked.connect(self.select_output_folder)
+        layout.addWidget(btn_select_output_folder)
 
-    def select_csv(self):
+        btn_start_record = QPushButton("Start Recording")
+        btn_start_record.clicked.connect(self.execute_record)
+        layout.addWidget(btn_start_record)
+
+        btn_generate_image = QPushButton("Generate Image")
+        btn_generate_image.clicked.connect(self.execute_draw)
+        layout.addWidget(btn_generate_image)
+
+        mainTab.setLayout(layout)
+        return mainTab
+
+    def manage_recordings_tab(self):
+        """Create the manage recordings page."""
+        manageRecordingsTab = QWidget()
+        layout = QVBoxLayout()
+
+        btn_select_csv_file = QPushButton("Select csv-file from recording")
+        btn_select_csv_file.clicked.connect(self.select_csv_file)
+
+        layout.addWidget(btn_select_csv_file)
+        manageRecordingsTab.setLayout(layout)
+        return manageRecordingsTab
+
+    def select_csv_file(self):
         csv_file, _ = QFileDialog.getOpenFileName(
             self, "Select CSV File", "", "CSV Files (*.csv)"
         )
-
         if csv_file:
-            self.csv_path = csv_file
-            self.csv_label.setText(f"{csv_file}")
-            self.check_paths()
+            self.file_handler.csv_file = csv_file
+            logging.info("File selected %s" % (csv_file))
+        else:
+            logging.warn("No csv file selected!")
 
     def select_output_folder(self):
         output_folder = QFileDialog.getExistingDirectory(
             self, "Select Output Folder"
         )
-
         if output_folder:
-            self.output_folder_path = output_folder
-            self.output_folder_label.setText(f"{output_folder}")
-            self.check_paths()
-
-    def check_paths(self):
-        if self.csv_path and self.output_folder_path:
-            self.draw_btn.setEnabled(True)
+            self.file_handler.output_path = Path(output_folder)
+            logging.info("Folder selected %s" % (output_folder))
         else:
-            self.draw_btn.setEnabled(False)
+            logging.warn("No output folder selected!")
 
     def execute_record(self):
         record_mouse()
 
     def execute_draw(self):
-        draw_mouse_tracks(self.csv_path, self.output_folder_path)
+        draw_mouse_tracks()
 
 
 def start_gui():
