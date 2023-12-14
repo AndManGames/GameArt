@@ -3,99 +3,116 @@ import logging
 import sys
 from pathlib import Path
 
+from PyQt5.QtCore import QDir
 from PyQt5.QtWidgets import (
+    QAction,
     QApplication,
     QFileDialog,
+    QFileSystemModel,
     QGridLayout,
-    QLabel,
-    QListWidget,
+    QListView,
+    QMainWindow,
+    QMenu,
     QPushButton,
     QTabWidget,
-    QVBoxLayout,
+    QTreeView,
     QWidget,
 )
 
 from gameart.api import draw_mouse_tracks, record_mouse
 from gameart.FileHandler import FileHandlerSingleton
-from gameart.utils import utils
 
 logging.basicConfig(level=logging.INFO)
 
 
-screen_width = utils._get_screensize()[0]
-screen_height = utils._get_screensize()[1]
-window_width = screen_width // 5
-window_height = screen_height // 3
+class MainWindow(QMainWindow):
+    """Main Window."""
 
-
-class MainWindow(QWidget):
     def __init__(self):
         super().__init__()
+        self.file_handler = FileHandlerSingleton()
+
         self.setWindowTitle(
             f"GameArt - {importlib.metadata.version('gameart')}"
         )
-        self.resize(300, 150)
-        layout = QVBoxLayout()
-        self.setLayout(layout)
+        self.resize(750, 500)
 
-        layout.addWidget(
-            QLabel(f"{importlib.metadata.metadata('gameart')['summary']}")
-        )
+        menu_bar = self.menuBar()
+        self._create_actions()
+        menu_bar.addMenu(self._menu_bar())  # type: ignore
 
-        tabs = QTabWidget()
-        tabs.addTab(self.main_tab(), "Record and Generate")
-        layout.addWidget(tabs)
-        layout.addStretch()
+        self.tabWidget = QTabWidget()
+        self.setCentralWidget(self.tabWidget)
+        self.main_tab = QWidget()
+        self._setup_main_tab()
+        self.tabWidget.addTab(self.main_tab, "Record and Generate")
 
-        self.file_handler = FileHandlerSingleton()
+    def _create_actions(self):
+        """Creating action using the first constructor."""
+        self.output_folder_action = QAction(self)
+        self.output_folder_action.setText("&Select Output Folder")
+        self.output_folder_action.triggered.connect(self._select_output_folder)
 
-    def main_tab(self):
+    def _menu_bar(self):
+        """Create the menu bar."""
+        file_menu = QMenu("&File", self)
+        file_menu.addAction(self.output_folder_action)
+
+        return file_menu
+
+    def _setup_main_tab(self):
         """Create the main page."""
-        mainTab = QWidget()
         layout = QGridLayout()
 
-        btn_select_output_folder = QPushButton("Select Output Folder")
-        btn_select_output_folder.clicked.connect(self.select_output_folder)
-        layout.addWidget(btn_select_output_folder, 0, 0)
-
+        # Create buttons
         btn_start_record = QPushButton("Start Recording")
-        btn_start_record.clicked.connect(self.execute_record)
-        layout.addWidget(btn_start_record, 1, 0)
+        btn_start_record.clicked.connect(self._execute_record)
+        layout.addWidget(btn_start_record, 2, 0, 3, 0)
 
         btn_generate_image = QPushButton("Generate Image")
-        btn_generate_image.clicked.connect(self.execute_draw)
-        layout.addWidget(btn_generate_image, 2, 0)
+        btn_generate_image.clicked.connect(self._execute_draw)
+        layout.addWidget(btn_generate_image, 5, 0, 6, 0)
 
-        list_selection = QListWidget()
-        list_selection.addItems(["One", "Two", "Three"])
-        layout.addWidget(list_selection, 0, 1, 3, 1)
+        # Create file system models (dir and files)
+        self.dir_model = QFileSystemModel()
+        self.dir_model.setRootPath(QDir.rootPath())
+        self.dir_model.setFilter(QDir.NoDotAndDotDot | QDir.AllDirs)
 
-        mainTab.setLayout(layout)
-        return mainTab
+        self.file_model = QFileSystemModel()
+        self.file_model.setRootPath(QDir.rootPath())
+        self.file_model.setFilter(QDir.NoDotAndDotDot | QDir.Files)
+        self.file_model.setNameFilters(["*.csv"])
 
-    def manage_recordings_tab(self):
-        """Create the manage recordings page."""
-        manageRecordingsTab = QWidget()
-        layout = QVBoxLayout()
-
-        btn_select_csv_file = QPushButton("Select csv-file from recording")
-        btn_select_csv_file.clicked.connect(self.select_csv_file)
-
-        layout.addWidget(btn_select_csv_file)
-        manageRecordingsTab.setLayout(layout)
-        return manageRecordingsTab
-
-    def select_csv_file(self):
-        csv_file, _ = QFileDialog.getOpenFileName(
-            self, "Select CSV File", "", "CSV Files (*.csv)"
+        # Create tree and list view
+        tree_view = QTreeView()
+        tree_view.setModel(self.dir_model)
+        tree_view.setRootIndex(
+            self.dir_model.index(str(self.file_handler.output_path))
         )
-        if csv_file:
-            self.file_handler.csv_file = csv_file
-            logging.info("File selected %s" % (csv_file))
-        else:
-            logging.warn("No csv file selected!")
+        tree_view.clicked.connect(self._on_tree_view_clicked)
+        layout.addWidget(tree_view, 1, 0)
 
-    def select_output_folder(self):
+        self.list_view = QListView()
+        self.list_view.setModel(self.file_model)
+        self.list_view.setRootIndex(
+            self.file_model.index(str(self.file_handler.output_path))
+        )
+        self.list_view.clicked.connect(self._on_list_view_clicked)
+        layout.addWidget(self.list_view, 1, 1)
+
+        self.main_tab.setLayout(layout)
+
+    def _on_tree_view_clicked(self, index):
+        folder_path = self.dir_model.fileInfo(index).absoluteFilePath()
+        logging.info("Folder selected %s" % (folder_path))
+        self.list_view.setRootIndex(self.file_model.setRootPath(folder_path))
+
+    def _on_list_view_clicked(self, index):
+        file_path = self.file_model.fileInfo(index).absoluteFilePath()
+        logging.info("File selected %s" % (file_path))
+        self.file_handler.csv_file = file_path
+
+    def _select_output_folder(self):
         output_folder = QFileDialog.getExistingDirectory(
             self, "Select Output Folder"
         )
@@ -105,10 +122,10 @@ class MainWindow(QWidget):
         else:
             logging.warn("No output folder selected!")
 
-    def execute_record(self):
+    def _execute_record(self):
         record_mouse()
 
-    def execute_draw(self):
+    def _execute_draw(self):
         draw_mouse_tracks()
 
 
