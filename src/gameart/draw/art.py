@@ -1,4 +1,3 @@
-import datetime
 import logging
 import platform
 from pathlib import Path
@@ -22,9 +21,10 @@ def _draw_mouse_tracks() -> None:
     The picture will be saved to the output folder.
     """
     file_handler = FileHandlerSingleton()
-    csv_file = file_handler.csv_file
+    csv_file = Path(file_handler.csv_file)
+    csv_file_name = csv_file.stem
     output_path = file_handler.output_path
-    total_path = output_path / Path(csv_file)
+    total_path = output_path / csv_file
 
     logging.info("Read csv file...")
     data_frame_mouse_movement = pd.read_csv(total_path, index_col=0)
@@ -77,9 +77,7 @@ def _draw_mouse_tracks() -> None:
     output_folder_name = "gameart_images"
     utils._create_output_folder(output_path, output_folder_name)
 
-    current_time = datetime.datetime.now()
-    formatted_time = current_time.strftime("%Y-%m-%d_%H-%M-%S")
-    file_name = f"gameart_{formatted_time}"
+    file_name = f"gameart_{csv_file_name}"
 
     try:
         plt.savefig(f"{output_path}/{output_folder_name}/{file_name}.png")
