@@ -143,7 +143,7 @@ class MainWindow(QMainWindow):
         """
         file_extension = self.file_model.fileInfo(index).completeSuffix()
         if file_extension != "csv":
-            logging.warn(
+            logging.warning(
                 "File extension .%s not supported!" % (file_extension)
             )
             return
@@ -163,7 +163,7 @@ class MainWindow(QMainWindow):
             self._update_list_view(self.base_folder)
             logging.info("Folder selected %s" % (self.base_folder))
         else:
-            logging.warn("No folder selected!")
+            logging.warning("No folder selected!")
 
     def _select_output_folder(self) -> None:
         """
@@ -177,7 +177,7 @@ class MainWindow(QMainWindow):
             self.file_handler.output_path = Path(output_folder)
             print("Output folder selected %s" % (output_folder))
         else:
-            logging.warn("No output folder selected!")
+            logging.warning("No output folder selected!")
 
     def _execute_record(self) -> None:
         """
