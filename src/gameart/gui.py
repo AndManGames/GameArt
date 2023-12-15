@@ -135,7 +135,7 @@ class MainWindow(QMainWindow):
         self._update_list_view(self.base_folder)
 
 
-def start_gui():
+def _start_gui() -> None:
     app = QApplication(sys.argv)
     window = MainWindow()
     window.show()

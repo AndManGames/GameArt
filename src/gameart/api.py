@@ -41,6 +41,6 @@ def start_gui() -> None:
     """
     Public function to start the GUI of gameart.
     """
-    from gameart.gui import start_gui
+    from gameart import gui
 
-    start_gui()
+    gui._start_gui()
