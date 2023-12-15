@@ -59,7 +59,7 @@ class MainWindow(QMainWindow):
         return self._base_folder
 
     @base_folder.setter
-    def base_folder(self, value):
+    def base_folder(self, value: str):
         self._base_folder = value
 
     def _create_actions(self) -> None:
