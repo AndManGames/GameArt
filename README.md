@@ -106,21 +106,23 @@ There are 2 package versions available:
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-* Start recording your mouse movement:
-   ```sh
-   gameart record
-   ```
-* **Stop the recording** by pressing the `Right Mouse Button`
-
-* Generate image from your mouse recording:
-   ```sh
-   gameart draw --csv_file_path path/to/csv/file
-   ```
-    * If no output folder is specified the image will be saved to the current_dir/gameart_images.
-    * Optionally you can specify an output folder (absolute path) by using the argument `--output_folder`.
+* GUI
+    * Start GUI
     ```sh
-    gameart draw --csv_file_path path/to/csv/file --output_folder path/to/output/folder
+    gameart start_gui
     ```
+
+* CLI
+    * Start recording of your mouse movement:
+    ```sh
+    gameart record
+    ```
+    * Generate image from your mouse recording:
+    ```sh
+    gameart draw --csv_file_path path/to/csv/file
+    ```
+
+* Hint: **Stop the recording** by pressing the `Right Mouse Button`
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

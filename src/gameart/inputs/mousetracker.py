@@ -8,6 +8,7 @@ from typing import Any
 import pandas as pd
 from pynput import mouse
 
+from gameart.FileHandler import FileHandlerSingleton
 from gameart.utils import utils
 
 # Ensuring consistent coordinates between listener and controller on Windows
@@ -51,7 +52,9 @@ def _record_positions(fps: int) -> None:
         time.sleep(1 / fps)
 
 
-def _on_click(x: float, y: float, button: mouse.Button, pressed: bool) -> Any:
+def _on_click(
+    x: float, y: float, button: mouse.Button, pressed: bool, **kwargs
+) -> Any:
     """
     Method is called when a mouse button is clicked. Stops recording on
     right mouse button click.
@@ -73,17 +76,22 @@ def _on_click(x: float, y: float, button: mouse.Button, pressed: bool) -> Any:
         "{0} at {1}".format("Pressed" if pressed else "Released", (x, y))
     )
     if pressed and button == mouse.Button.right:
+        logging.info("Recording stopped")
+
         exit_event.set()
 
         current_time = datetime.datetime.now()
         formatted_time = current_time.strftime("%Y-%m-%d_%H-%M-%S")
         file_name = f"mousetracker_{formatted_time}.csv"
 
-        logging.info("Recording stopped")
+        file_handler = FileHandlerSingleton()
+        output_path = file_handler.output_path
+        file_handler.csv_file = file_name
+        total_path = output_path / file_name
 
-        data_frame_mouse_movement.to_csv(file_name, sep=",", encoding="utf-8")
+        data_frame_mouse_movement.to_csv(total_path, sep=",", encoding="utf-8")
 
-        logging.info(f"Log saved to {file_name}")
+        logging.info("Log saved to %s" % (total_path))
 
         return False
 

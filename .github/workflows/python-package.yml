@@ -37,7 +37,5 @@ jobs:
       run: |
         pre-commit run --all-files
     - name: Test with pytest
-      uses: GabrielBB/xvfb-action@v1
-      with:
-        run: |
-          pytest
+      run: |
+        pytest
