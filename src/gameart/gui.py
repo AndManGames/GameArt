@@ -1,6 +1,7 @@
 import importlib.metadata
 import logging
 import sys
+import webbrowser
 from pathlib import Path
 
 from PyQt5.QtCore import QDir, QModelIndex
@@ -104,6 +105,10 @@ class MainWindow(QMainWindow):
         btn_generate_image.clicked.connect(self._execute_draw)
         layout.addWidget(btn_generate_image, 4, 0)
 
+        btn_open_upload_page = QPushButton("Upload Image")
+        btn_open_upload_page.clicked.connect(self._open_upload_page)
+        layout.addWidget(btn_open_upload_page, 5, 0)
+
         # Create file system model
         self.file_model = QFileSystemModel()
         self.file_model.setRootPath(QDir.rootPath())
@@ -192,6 +197,12 @@ class MainWindow(QMainWindow):
         """
         draw_mouse_tracks()
         self._update_list_view(self.base_folder)
+
+    def _open_upload_page(self) -> None:
+        """
+        Opens the upload page of gameart_web
+        """
+        webbrowser.open("http://127.0.0.1:8000/dashboard/")
 
 
 def _start_gui() -> None:
