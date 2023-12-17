@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  PyInstaller:
 
     runs-on: ${{ matrix.os }}
     strategy:
@@ -25,7 +25,7 @@ jobs:
     - uses: actions/setup-python@v3
       with:
         python-version: "3.12"
-    - name: Create Virtual environment
+    - name: Create virtual environment
       run: |
         python -m pip install --upgrade pip
         python -m venv env
@@ -38,8 +38,20 @@ jobs:
     - run: pyinstaller --onefile ./src/gameart/gui.py --icon ./images/logo.png --distpath ./dist_exe --name gameart
     - uses: actions/upload-artifact@v3
       with:
-        path: dist/*
+        path: dist_exe/*
 
+  PyPi:
+
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ['ubuntu-latest']
+
+    steps:
+    - name: Check virtual environment
+      run: |
+        echo "VIRTUAL ENV:" $VIRTUAL_ENV
     - name: Install PyPi build dependencies
       run: |
         python -m pip install --upgrade pip
@@ -52,7 +64,13 @@ jobs:
         user: __token__
         password: ${{ secrets.PYPI_API_TOKEN }}
 
-    - name: create release
+    - name: Get version
+      uses: maybe-hello-world/pyproject-check-version@v4
+      id: getversion
+      with:
+        pyproject-path: "./pyproject.toml"
+
+    - name: Create release
       id: create_release
       uses: actions/create-release@v1
       env:
@@ -61,6 +79,6 @@ jobs:
         tag_name: ${{ github.event.head_commit.message }}
         release_name: ${{ github.event.head_commit.message }}
         body: |
-          GameArt
+          GameArt ${{ steps.getversion.outputs.local_version }}
         draft: false
         prerelease: false
