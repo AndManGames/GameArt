@@ -1,11 +1,11 @@
 <a name="readme-top"></a>
 
 <!-- PROJECT SHIELDS -->
+[![Releases][releases-shield]][releases-url]
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-[![Releases][releases-shield]][releases-url]
 [![MIT License][license-shield]][license-url]
 
 <!-- PROJECT LOGO -->
@@ -88,7 +88,7 @@ There are 2 package versions available:
 ### Installation
 
 1. Executable:
-    1. Download latest executable from here: https://github.com/AndManGames/GameArt/releases
+    1. Download latest executable from here: https://github.com/AndManGames/GameArt/releases (Windows: `gameart.exe`; Linux: `gameart`)
 2. From GitHub:
     1. Clone the repo
     ```sh
@@ -111,7 +111,7 @@ There are 2 package versions available:
 ## Usage
 
 * If you have downloaded the executable:
-    * Double click `gameart.exe` file and the GUI will open.
+    * Double click `gameart` executable file and the GUI will open.
 * If you have cloned from github or installed from PyPi:
     * Start GUI from terminal/command line:
         ```sh

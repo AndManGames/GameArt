@@ -3,8 +3,6 @@ name: Publish to PyPi and upload executable
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
 
 jobs:
   Release:
@@ -100,7 +98,7 @@ jobs:
     - uses: actions/upload-artifact@v3
       with:
         path: gameart/*
-    - name: Add gameart.exe to release
+    - name: Add gameart executable to release
       uses: softprops/action-gh-release@v1
       with:
         tag_name: ${{ needs.Release.outputs.tag }}
