@@ -1,6 +1,7 @@
 <a name="readme-top"></a>
 
 <!-- PROJECT SHIELDS -->
+[![Releases][releases-shield]][releases-url]
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
@@ -60,6 +61,7 @@ GameArt is still work in progress. Currently it is possible to create a png-file
 There are 2 package versions available:
 * gameart: This version is targeting the end user version with the possibility to record your mouse movement, save it as a csv and draw a png based on csv input.
 * gameart[dev]: This version has additional dev packages to be able to contribute to this project.
+* gameart[releases]: This version has additional build package to generate packages for uploading to PyPi and generating executables.
 
 
 ### Prerequisites
@@ -85,7 +87,9 @@ There are 2 package versions available:
 
 ### Installation
 
-1. From GitHub:
+1. Executable:
+    1. Download latest executable from here: https://github.com/AndManGames/GameArt/releases (Windows: `gameart.exe`; Linux: `gameart`)
+2. From GitHub:
     1. Clone the repo
     ```sh
     git clone https://github.com/AndManGames/GameArt.git
@@ -94,7 +98,7 @@ There are 2 package versions available:
     ```sh
     pip install .
     ```
-2. From PyPi:
+3. From PyPi:
   ```sh
   pip install gameart
   ```
@@ -106,21 +110,22 @@ There are 2 package versions available:
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-* GUI
-    * Start GUI
-    ```sh
-    gameart start_gui
-    ```
-
-* CLI
-    * Start recording of your mouse movement:
-    ```sh
-    gameart record
-    ```
-    * Generate image from your mouse recording:
-    ```sh
-    gameart draw --csv_file_path path/to/csv/file
-    ```
+* If you have downloaded the executable:
+    * Double click `gameart` executable file and the GUI will open.
+* If you have cloned from github or installed from PyPi:
+    * Start GUI from terminal/command line:
+        ```sh
+        gameart start_gui
+        ```
+    * Use command line interface (CLI):
+        * Start recording of your mouse movement:
+        ```sh
+        gameart record
+        ```
+        * Generate image from your mouse recording:
+        ```sh
+        gameart draw --csv_file_path path/to/csv/file
+        ```
 
 * Hint: **Stop the recording** by pressing the `Right Mouse Button`
 
@@ -184,6 +189,8 @@ Project Link: [https://github.com/AndManGames/GameArt](https://github.com/AndMan
 [stars-url]: https://github.com/AndManGames/GameArt/stargazers
 [issues-shield]: https://img.shields.io/github/issues/AndManGames/GameArt.svg?style=for-the-badge
 [issues-url]: https://github.com/AndManGames/GameArt/issues
+[releases-shield]: https://img.shields.io/github/release-date/AndManGames/GameArt.svg?style=for-the-badge
+[releases-url]: https://github.com/AndManGames/GameArt/releases
 [license-shield]: https://img.shields.io/github/license/AndManGames/GameArt.svg?style=for-the-badge
 [license-url]: https://github.com/AndManGames/GameArt/blob/master/LICENSE.txt
 [product-screenshot]: images/screenshot.png
