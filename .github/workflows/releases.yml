@@ -73,8 +73,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ github.event.head_commit.message }}
-        release_name: ${{ github.event.head_commit.message }}
+        tag_name: ${{ steps.getversion.outputs.local_version }}
+        release_name: Release ${{ steps.getversion.outputs.local_version }}
         body: |
           GameArt ${{ steps.getversion.outputs.local_version }}
         draft: false
