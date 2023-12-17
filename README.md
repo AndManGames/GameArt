@@ -111,7 +111,7 @@ There are 2 package versions available:
 ## Usage
 
 * If you have downloaded the executable:
-    * Double click .exe file and the GUI will open.
+    * Double click `gameart.exe` file and the GUI will open.
 * If you have cloned from github or installed from PyPi:
     * Start GUI from terminal/command line:
         ```sh
