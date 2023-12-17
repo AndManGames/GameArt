@@ -1,3 +1,4 @@
+import logging
 import shutil
 from collections.abc import Generator
 from pathlib import Path
@@ -27,7 +28,7 @@ def temp_directory(tmp_path: Path) -> Generator[Path, Any, Any]:
     try:
         shutil.rmtree(temp_dir)
     except OSError as e:
-        print("Error: %s - %s." % (e.filename, e.strerror))
+        logging.error("Error: %s - %s." % (e.filename, e.strerror))
 
 
 def test_get_latest_csv_file_no_files(temp_directory: Path) -> None:
