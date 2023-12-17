@@ -11,6 +11,8 @@ jobs:
     runs-on: 'ubuntu-latest'
     strategy:
       fail-fast: false
+    outputs:
+      tag: ${{ steps.output_tag.outputs.tag }}
 
     steps:
     - uses: actions/checkout@v3
@@ -33,7 +35,12 @@ jobs:
         draft: false
         prerelease: false
 
+    - name: Output tag
+      id: output_tag
+      run: echo "tag=${{ steps.getversion.outputs.local_version }}" >> "$GITHUB_OUTPUT"
+
   PyPi:
+    needs: Release
     runs-on: 'ubuntu-latest'
     strategy:
       fail-fast: false
@@ -62,6 +69,7 @@ jobs:
         password: ${{ secrets.PYPI_API_TOKEN }}
 
   PyInstaller:
+    needs: Release
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -92,14 +100,10 @@ jobs:
     - uses: actions/upload-artifact@v3
       with:
         path: gameart/*
-    - name: GitHub Tag
-      run: |
-        echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
-        echo "Tag name from github.ref_name: ${{ github.ref_name }}"
     - name: Add gameart.exe to release
       uses: softprops/action-gh-release@v1
-      if: startsWith(github.ref, ${{ github.ref_name }})
       with:
+        tag_name: ${{ needs.Release.outputs.tag }}
         files: gameart/*
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
