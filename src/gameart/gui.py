@@ -188,9 +188,10 @@ class MainWindow(QMainWindow):
             self, "Select Output Folder"
         )
         if output_folder:
-            self._update_list_view(output_folder)
             self.file_handler.output_path = Path(output_folder)
             logging.info("Output folder selected %s" % (output_folder))
+            self.base_folder = output_folder
+            self._update_list_view(output_folder)
         else:
             logging.warning("No output folder selected!")
 
