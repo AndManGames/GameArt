@@ -16,7 +16,7 @@ jobs:
         os: ['windows-latest', 'ubuntu-latest']
         include:
           - os: 'windows-latest'
-            activate: '.\env\Scripts\activate'
+            activate: 'env\Scripts\activate'
           - os: 'ubuntu-latest'
             activate: 'source env/bin/activate'
 
@@ -35,16 +35,10 @@ jobs:
       run: |
         python -m pip install .[release]
 
-    - run: pyinstaller --onefile ./src/gameart/gui.py --icon ./images/logo.png
+    - run: pyinstaller --onefile ./src/gameart/gui.py --icon ./images/logo.png --distpath ./dist_exe --name gameart
     - uses: actions/upload-artifact@v3
       with:
         path: dist/*
-
-    - name: Get version
-      uses: maybe-hello-world/pyproject-check-version@v4
-      id: getversion
-      with:
-        pyproject-path: "./pyproject.toml"
 
     - name: Install PyPi build dependencies
       run: |
@@ -67,6 +61,6 @@ jobs:
         tag_name: ${{ github.event.head_commit.message }}
         release_name: ${{ github.event.head_commit.message }}
         body: |
-          GameArt ${{ steps.getversion.outputs.local_version }}
+          GameArt
         draft: false
         prerelease: false

@@ -163,6 +163,7 @@ cython_debug/
 
 # project specific files
 *.csv
+*.exe
 
 # project specific folders
 gameart_images/
