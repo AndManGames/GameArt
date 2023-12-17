@@ -7,39 +7,6 @@ on:
     branches: [ "main" ]
 
 jobs:
-  PyInstaller:
-
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: ['windows-latest', 'ubuntu-latest']
-        include:
-          - os: 'windows-latest'
-            activate: 'env\Scripts\activate'
-          - os: 'ubuntu-latest'
-            activate: 'source env/bin/activate'
-
-    steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-python@v3
-      with:
-        python-version: "3.12"
-    - name: Create virtual environment
-      run: |
-        python -m pip install --upgrade pip
-        python -m venv env
-        ${{ matrix.activate }}
-        echo "VIRTUAL ENV:" $VIRTUAL_ENV
-    - name: Install dependencies
-      run: |
-        python -m pip install .[release]
-
-    - run: pyinstaller --onefile ./src/gameart/gui.py --icon ./images/logo.png --distpath ./dist_exe --name gameart
-    - uses: actions/upload-artifact@v3
-      with:
-        path: dist_exe/*
-
   PyPi:
 
     runs-on: 'ubuntu-latest'
@@ -87,3 +54,43 @@ jobs:
       with:
         user: __token__
         password: ${{ secrets.PYPI_API_TOKEN }}
+
+  PyInstaller:
+
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ['windows-latest', 'ubuntu-latest']
+        include:
+          - os: 'windows-latest'
+            activate: 'env\Scripts\activate'
+          - os: 'ubuntu-latest'
+            activate: 'source env/bin/activate'
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v3
+      with:
+        python-version: "3.12"
+    - name: Create virtual environment
+      run: |
+        python -m pip install --upgrade pip
+        python -m venv env
+        ${{ matrix.activate }}
+        echo "VIRTUAL ENV:" $VIRTUAL_ENV
+    - name: Install dependencies
+      run: |
+        python -m pip install .[release]
+
+    - run: pyinstaller --onefile ./src/gameart/gui.py --icon ./images/logo.png --distpath ./gameart --name gameart
+    - uses: actions/upload-artifact@v3
+      with:
+        path: gameart/*
+    - name: Add dist_exe to release
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        files: gameart/*
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
