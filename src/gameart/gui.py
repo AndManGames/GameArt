@@ -4,7 +4,7 @@ import sys
 import webbrowser
 from pathlib import Path
 
-from PyQt5.QtCore import QDir, QModelIndex
+from PyQt5.QtCore import QDir, QModelIndex, Qt
 from PyQt5.QtWidgets import (
     QAction,
     QApplication,
@@ -94,7 +94,7 @@ class MainWindow(QMainWindow):
         layout = QGridLayout()
 
         # Create buttons
-        btn_select_base_folder = QPushButton("Select Folder")
+        btn_select_base_folder = QPushButton("Select Folder to View")
         btn_select_base_folder.clicked.connect(self._select_base_folder)
         layout.addWidget(btn_select_base_folder, 1, 0)
 
@@ -112,16 +112,21 @@ class MainWindow(QMainWindow):
         layout.addWidget(btn_open_upload_page, 6, 0)
 
         # Create labels
-        label_current_output_folder = QLabel(
-            f"(Current output folder {self.file_handler.output_path}, File -> "
-            + "Select Output Folder)"
+        self.label_current_output_folder = QLabel(
+            "label_current_output_folder"
         )
-        layout.addWidget(label_current_output_folder, 5, 0)
+        self.label_current_output_folder.setAlignment(
+            Qt.AlignmentFlag.AlignCenter
+        )
+        self._update_output_folder_label(str(self.file_handler.output_path))
+        layout.addWidget(self.label_current_output_folder, 5, 0)
 
         # Create file system model
         self.file_model = QFileSystemModel()
         self.file_model.setRootPath(QDir.rootPath())
-        self.file_model.setFilter(QDir.NoDotAndDotDot | QDir.Files)
+        self.file_model.setFilter(
+            QDir.NoDotAndDotDot | QDir.Files | QDir.AllDirs
+        )
         self.file_model.setNameFilters(["*.csv"])
 
         # Create list view
@@ -144,6 +149,21 @@ class MainWindow(QMainWindow):
         """
         self.list_view.setRootIndex(self.file_model.setRootPath(folder))
         logging.info("List view updated.")
+
+    def _update_output_folder_label(self, folder: str) -> None:
+        """
+        Updates the label of the current output folder by setting the text to
+        the given folder path
+
+        Args:
+            folder (str): Path to the folder which shall be visible in label
+            view
+        """
+        self.label_current_output_folder.setText(
+            f"(Current output folder {folder}, File -> "
+            + "Select Output Folder)"
+        )
+        logging.info("Label of output folder updated.")
 
     def _on_list_view_clicked(self, index: QModelIndex) -> None:
         """
@@ -188,10 +208,11 @@ class MainWindow(QMainWindow):
             self, "Select Output Folder"
         )
         if output_folder:
+            self.base_folder = output_folder
+            self._update_output_folder_label(output_folder)
+            self._update_list_view(output_folder)
             self.file_handler.output_path = Path(output_folder)
             logging.info("Output folder selected %s" % (output_folder))
-            self.base_folder = output_folder
-            self._update_list_view(output_folder)
         else:
             logging.warning("No output folder selected!")
 
