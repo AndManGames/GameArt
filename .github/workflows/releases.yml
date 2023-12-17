@@ -75,10 +75,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Get Latest Tag
-      id: latesttag
-      uses: WyriHaximus/github-action-get-previous-tag@v1.3.0
-
     - uses: actions/setup-python@v3
       with:
         python-version: "3.12"
@@ -96,18 +92,13 @@ jobs:
     - uses: actions/upload-artifact@v3
       with:
         path: gameart/*
-    - name: Set Tag
-      id: vars
-      run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
-    - name: Check Tag
-      env:
-        RELEASE_TAG: ${{ steps.vars.outputs.tag }}
+    - name: GitHub Tag
       run: |
-        echo $RELEASE_TAG
-        echo ${{ steps.vars.outputs.tag }}
+        echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
+        echo "Tag name from github.ref_name: ${{ github.ref_name }}"
     - name: Add gameart.exe to release
       uses: softprops/action-gh-release@v1
-      if: startsWith(github.ref, ${{ steps.latesttag.outputs.tag }})
+      if: startsWith(github.ref, ${{ github.ref_name }})
       with:
         files: gameart/*
       env:
