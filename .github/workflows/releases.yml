@@ -13,6 +13,7 @@ jobs:
       fail-fast: false
 
     steps:
+    - uses: actions/checkout@v3
     - name: Get version
       uses: maybe-hello-world/pyproject-check-version@v4
       id: getversion
@@ -74,6 +75,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: Get version
+      uses: maybe-hello-world/pyproject-check-version@v4
+      id: getversion
+      with:
+        pyproject-path: "./pyproject.toml"
+
     - uses: actions/setup-python@v3
       with:
         python-version: "3.12"
@@ -93,6 +100,7 @@ jobs:
         path: gameart/*
     - name: Add dist_exe to release
       uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, ${{ steps.getversion.outputs.local_version }})
       with:
         files: gameart/*
       env:
