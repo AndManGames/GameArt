@@ -75,11 +75,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Get version
-      uses: maybe-hello-world/pyproject-check-version@v4
-      id: getversion
-      with:
-        pyproject-path: "./pyproject.toml"
+    - name: Get Latest Tag
+      id: latesttag
+      uses: WyriHaximus/github-action-get-previous-tag@v1.3.0
 
     - uses: actions/setup-python@v3
       with:
@@ -98,9 +96,9 @@ jobs:
     - uses: actions/upload-artifact@v3
       with:
         path: gameart/*
-    - name: Add dist_exe to release
+    - name: Add gameart.exe to release
       uses: softprops/action-gh-release@v1
-      if: startsWith(github.ref, ${{ steps.getversion.outputs.local_version }})
+      if: startsWith(github.ref, ${{ steps.latesttag.outputs.tag }})
       with:
         files: gameart/*
       env:

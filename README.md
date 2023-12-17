@@ -88,7 +88,7 @@ There are 2 package versions available:
 ### Installation
 
 1. Executable:
-    1. Download executable from here:
+    1. Download latest executable from here: https://github.com/AndManGames/GameArt/releases
 2. From GitHub:
     1. Clone the repo
     ```sh
