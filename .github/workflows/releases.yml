@@ -96,6 +96,15 @@ jobs:
     - uses: actions/upload-artifact@v3
       with:
         path: gameart/*
+    - name: Set Tag
+      id: vars
+      run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+    - name: Check Tag
+      env:
+        RELEASE_TAG: ${{ steps.vars.outputs.tag }}
+      run: |
+        echo $RELEASE_TAG
+        echo ${{ steps.vars.outputs.tag }}
     - name: Add gameart.exe to release
       uses: softprops/action-gh-release@v1
       if: startsWith(github.ref, ${{ steps.latesttag.outputs.tag }})
