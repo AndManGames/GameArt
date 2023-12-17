@@ -11,6 +11,7 @@ from PyQt5.QtWidgets import (
     QFileDialog,
     QFileSystemModel,
     QGridLayout,
+    QLabel,
     QListView,
     QMainWindow,
     QMenu,
@@ -105,9 +106,17 @@ class MainWindow(QMainWindow):
         btn_generate_image.clicked.connect(self._execute_draw)
         layout.addWidget(btn_generate_image, 4, 0)
 
-        btn_open_upload_page = QPushButton("Upload Image")
+        btn_open_upload_page = QPushButton("Upload Image (coming soon)")
         btn_open_upload_page.clicked.connect(self._open_upload_page)
-        layout.addWidget(btn_open_upload_page, 5, 0)
+        btn_open_upload_page.setEnabled(False)
+        layout.addWidget(btn_open_upload_page, 6, 0)
+
+        # Create labels
+        label_current_output_folder = QLabel(
+            f"(Current output folder {self.file_handler.output_path}, File -> "
+            + "Select Output Folder)"
+        )
+        layout.addWidget(label_current_output_folder, 5, 0)
 
         # Create file system model
         self.file_model = QFileSystemModel()
@@ -179,8 +188,9 @@ class MainWindow(QMainWindow):
             self, "Select Output Folder"
         )
         if output_folder:
+            self._update_list_view(output_folder)
             self.file_handler.output_path = Path(output_folder)
-            print("Output folder selected %s" % (output_folder))
+            logging.info("Output folder selected %s" % (output_folder))
         else:
             logging.warning("No output folder selected!")
 
@@ -214,3 +224,8 @@ def _start_gui() -> None:
     window.show()
 
     sys.exit(app.exec_())
+
+
+# entry point for pyinstaller
+if __name__ == "__main__":
+    _start_gui()
