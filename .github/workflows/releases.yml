@@ -61,6 +61,25 @@ jobs:
       run: |
         python -m pip install .[release]
 
+    - name: Get version
+      uses: maybe-hello-world/pyproject-check-version@v4
+      id: getversion
+      with:
+        pyproject-path: "./pyproject.toml"
+
+    - name: Create release
+      id: create_release
+      uses: actions/create-release@latest
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        body: |
+          GameArt ${{ steps.getversion.outputs.local_version }}
+        draft: false
+        prerelease: false
+
     - name: Install PyPi build dependencies
       run: |
         python -m pip install --upgrade pip
@@ -72,22 +91,3 @@ jobs:
       with:
         user: __token__
         password: ${{ secrets.PYPI_API_TOKEN }}
-
-    - name: Get version
-      uses: maybe-hello-world/pyproject-check-version@v4
-      id: getversion
-      with:
-        pyproject-path: "./pyproject.toml"
-
-    - name: Create release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ github.event.head_commit.message }}
-        release_name: ${{ github.event.head_commit.message }}
-        body: |
-          GameArt ${{ steps.getversion.outputs.local_version }}
-        draft: false
-        prerelease: false
