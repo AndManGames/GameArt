@@ -103,6 +103,7 @@ jobs:
         python ./waf all
     - name: Install pyinstaller
       run: |
+        cd pyinstaller
         python -m pip install .
 
     - run: pyinstaller --onefile ./src/gameart/gui.py --icon ./images/logo.png --distpath ./gameart --name gameart
