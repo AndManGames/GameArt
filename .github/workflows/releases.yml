@@ -94,7 +94,7 @@ jobs:
       run: |
         python -m pip install .[release]
 
-    - run: pyinstaller --onefile ./src/gameart/gui.py --icon ./images/logo.png --distpath ./gameart --name gameart
+    - run: pyinstaller ./src/gameart/gui.py --icon ./images/logo.png --distpath ./gameart --name gameart
     - uses: actions/upload-artifact@v3
       with:
         path: gameart/*
