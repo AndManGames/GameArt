@@ -28,12 +28,12 @@ jobs:
             echo "Version updated? ${{ steps.getversion.outputs.local_version_is_higher }}"
 
       - name: Check if version updated
-        if: ${{ steps.getversion.outputs.local_version_is_higher }} != true
+        if: ${{ steps.getversion.outputs.local_version_is_higher }} != 'true'
         continue-on-error: false
         uses: actions/github-script@v3
         with:
           script: |
-              core.setFailed('Version in ./pyproject.toml has not been updated. ${{ steps.getversion.outputs.local_version_is_higher }}. ')
+              core.setFailed('Version in ./pyproject.toml has not been updated.')
 
   build:
     needs: check_if_version_updated
