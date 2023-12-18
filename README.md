@@ -1,7 +1,9 @@
 <a name="readme-top"></a>
 
 <!-- PROJECT SHIELDS -->
-[![Releases][releases-shield]][releases-url] \
+[![Releases][releases-shield]][releases-url]
+[![Releases][pypi-shield]][pypi-url]
+[![Python][pypi-pythonversion-shield]][pypi-url] \
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
@@ -183,6 +185,9 @@ Project Link: [https://github.com/AndManGames/GameArt](https://github.com/AndMan
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [releases-shield]: https://img.shields.io/github/v/release/AndManGames/GameArt?logo=github&style=for-the-badge&label=Latest%20Release
 [releases-url]: https://github.com/AndManGames/GameArt/releases
+[pypi-shield]: https://img.shields.io/pypi/v/gameart?logo=github&style=for-the-badge
+[pypi-pythonversion-shield]: https://img.shields.io/pypi/pyversions/gameart?logo=github&style=for-the-badge
+[pypi-url]: https://pypi.org/project/gameart/
 [contributors-shield]: https://img.shields.io/github/contributors/AndManGames/GameArt.svg?logo=github
 [contributors-url]: https://github.com/AndManGames/GameArt/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/AndManGames/GameArt.svg?logo=github
