@@ -103,7 +103,7 @@ jobs:
     - name: Build bootloader of pyinstaller
       run: |
         cd pyinstaller/bootloader/
-        python ./waf all
+        ll
     - name: Install pyinstaller
       run: |
         cd ..
