@@ -98,14 +98,12 @@ jobs:
         repository: pyinstaller/pyinstaller
     - name: Build bootloader of pyinstaller
       run: |
-        ll
         cd bootloader/
-        ll
         python ./waf all
     - name: Install pyinstaller
       run: |
         cd ..
-        pip install .
+        python -m pip install .
 
     - run: pyinstaller --onefile ./src/gameart/gui.py --icon ./images/logo.png --distpath ./gameart --name gameart
     - uses: actions/upload-artifact@v3
