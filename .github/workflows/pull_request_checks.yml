@@ -47,13 +47,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v3
       - name: Get version of python package
         uses: maybe-hello-world/pyproject-check-version@v4
         id: getversion
         with:
           pyproject-path: "./pyproject.toml"
 
-      - name: check output
+      - name: Check if version has been updated
         run: |
             echo "Output: ${{ steps.getversion.outputs.local_version_is_higher }}"
             echo "Local version: ${{ steps.getversion.outputs.local_version }}"
