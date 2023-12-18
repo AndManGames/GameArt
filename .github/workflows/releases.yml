@@ -15,7 +15,7 @@ jobs:
   #     tag: ${{ steps.output_tag.outputs.tag }}
 
   #   steps:
-  #   - uses: actions/checkout@v3
+  #   - uses: actions/checkout@master
   #   - name: Get version of python package
   #     uses: maybe-hello-world/pyproject-check-version@v4
   #     id: getversion
@@ -46,7 +46,7 @@ jobs:
   #     fail-fast: false
 
   #   steps:
-  #   - uses: actions/checkout@v3
+  #   - uses: actions/checkout@master
   #   - uses: actions/setup-python@v3
   #     with:
   #       python-version: "3.12"
@@ -96,9 +96,10 @@ jobs:
       uses: actions/checkout@master
       with:
         repository: pyinstaller/pyinstaller
+        path: 'pyinstaller'
     - name: Build bootloader of pyinstaller
       run: |
-        cd bootloader/
+        cd pyinstaller/bootloader/
         python ./waf all
     - name: Install pyinstaller
       run: |
@@ -110,7 +111,7 @@ jobs:
       with:
         path: gameart/*
 
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@master
     - name: Install dependencies
       run: |
         python -m pip install .
