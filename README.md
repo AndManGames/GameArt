@@ -62,7 +62,7 @@ GameArt is still work in progress. Currently it is possible to create a png-file
 
 These package versions are available:
 * `gameart`: This version is targeting the end user version with the possibility to record your mouse movement, save it as a csv and draw a png based on csv input.
-* `ameart[dev]`: This version has additional dev packages to be able to contribute to this project.
+* `gameart[dev]`: This version has additional dev packages to be able to contribute to this project.
 * `gameart[release]`: This version has additional build packages to generate a package and upload to PyPi.
 
 
@@ -91,6 +91,7 @@ These package versions are available:
 
 1. Executable:
     1. Download latest executable from here: https://github.com/AndManGames/GameArt/releases (Windows: `gameart.exe`; Linux: `gameart`)
+    **Important**: It could be that your browser and/or Windows defender is flagging the executable as malicious. This comes from pyinstaller and I am working on fixing that. You can be sure that the executables are safe!
 2. From GitHub:
     1. Clone the repo
     ```sh
