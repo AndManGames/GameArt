@@ -1,7 +1,7 @@
 <a name="readme-top"></a>
 
 <!-- PROJECT SHIELDS -->
-[![Releases][releases-shield]][releases-url]
+[![Releases][releases-shield]][releases-url] \
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
@@ -58,10 +58,10 @@
 
 GameArt is still work in progress. Currently it is possible to create a png-file with matplotlib from the recorded mouse movement using pynput. The "Art" aspect is currently missing, but I will work on that.
 
-There are 2 package versions available:
-* gameart: This version is targeting the end user version with the possibility to record your mouse movement, save it as a csv and draw a png based on csv input.
-* gameart[dev]: This version has additional dev packages to be able to contribute to this project.
-* gameart[releases]: This version has additional build package to generate packages for uploading to PyPi and generating executables.
+These package versions are available:
+* `gameart`: This version is targeting the end user version with the possibility to record your mouse movement, save it as a csv and draw a png based on csv input.
+* `ameart[dev]`: This version has additional dev packages to be able to contribute to this project.
+* `gameart[release]`: This version has additional build packages to generate and upload to PyPi and for generating executables.
 
 
 ### Prerequisites
@@ -181,16 +181,16 @@ Project Link: [https://github.com/AndManGames/GameArt](https://github.com/AndMan
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/AndManGames/GameArt.svg?style=for-the-badge
-[contributors-url]: https://github.com/AndManGames/GameArt/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/AndManGames/GameArt.svg?style=for-the-badge
-[forks-url]: https://github.com/AndManGames/GameArt/network/members
-[stars-shield]: https://img.shields.io/github/stars/AndManGames/GameArt.svg?style=for-the-badge
-[stars-url]: https://github.com/AndManGames/GameArt/stargazers
-[issues-shield]: https://img.shields.io/github/issues/AndManGames/GameArt.svg?style=for-the-badge
-[issues-url]: https://github.com/AndManGames/GameArt/issues
-[releases-shield]: https://img.shields.io/github/release-date/AndManGames/GameArt.svg?style=for-the-badge
+[releases-shield]: https://img.shields.io/github/v/release/AndManGames/GameArt?logo=github&style=for-the-badge&label=Latest%20Release
 [releases-url]: https://github.com/AndManGames/GameArt/releases
-[license-shield]: https://img.shields.io/github/license/AndManGames/GameArt.svg?style=for-the-badge
+[contributors-shield]: https://img.shields.io/github/contributors/AndManGames/GameArt.svg?logo=github
+[contributors-url]: https://github.com/AndManGames/GameArt/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/AndManGames/GameArt.svg?logo=github
+[forks-url]: https://github.com/AndManGames/GameArt/network/members
+[stars-shield]: https://img.shields.io/github/stars/AndManGames/GameArt.svg?logo=github
+[stars-url]: https://github.com/AndManGames/GameArt/stargazers
+[issues-shield]: https://img.shields.io/github/issues/AndManGames/GameArt.svg?logo=github
+[issues-url]: https://github.com/AndManGames/GameArt/issues
+[license-shield]: https://img.shields.io/github/license/AndManGames/GameArt.svg?logo=github
 [license-url]: https://github.com/AndManGames/GameArt/blob/master/LICENSE.txt
 [product-screenshot]: images/screenshot.png
