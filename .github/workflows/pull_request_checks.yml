@@ -28,7 +28,8 @@ jobs:
             echo "Version updated? ${{ steps.getversion.outputs.local_version_is_higher }}"
 
       - name: Check if version updated
-        if:  steps.getversion.outputs.local_version_is_higher == 'false'
+        if: ${{ steps.getversion.outputs.local_version_is_higher == 'False' }}
+        continue-on-error: false
         uses: actions/github-script@v3
         with:
           script: |
