@@ -42,8 +42,25 @@ jobs:
       run: |
         pytest
 
-  auto-approve:
+  check_if_version_updated:
     needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get version of python package
+        uses: maybe-hello-world/pyproject-check-version@v4
+        id: getversion
+        with:
+          pyproject-path: "./pyproject.toml"
+
+      - name: check output
+        run: |
+            echo "Output: ${{ steps.getversion.outputs.local_version_is_higher }}"
+            echo "Local version: ${{ steps.getversion.outputs.local_version }}"
+            echo "Public version: ${{ steps.getversion.outputs.public_version }}"
+
+  auto-approve-if-codeowner:
+    needs: check_if_version_updated
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
@@ -51,4 +68,4 @@ jobs:
     steps:
       - uses: hmarr/auto-approve-action@v3
         with:
-          review-message: "Auto approved automated PR"
+          review-message: "Auto approved because PR was created by codeowner."
