@@ -58,10 +58,10 @@
 
 GameArt is still work in progress. Currently it is possible to create a png-file with matplotlib from the recorded mouse movement using pynput. The "Art" aspect is currently missing, but I will work on that.
 
-There are 2 package versions available:
+These package versions are available:
 * gameart: This version is targeting the end user version with the possibility to record your mouse movement, save it as a csv and draw a png based on csv input.
 * gameart[dev]: This version has additional dev packages to be able to contribute to this project.
-* gameart[releases]: This version has additional build package to generate packages for uploading to PyPi and generating executables.
+* gameart[releases]: This version has additional build packages to generate and upload to PyPi and for generating executables.
 
 
 ### Prerequisites
@@ -181,7 +181,7 @@ Project Link: [https://github.com/AndManGames/GameArt](https://github.com/AndMan
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[releases-shield]: https://img.shields.io/github/v/release/AndManGames/GameArt?logo=github
+[releases-shield]: https://img.shields.io/github/v/release/AndManGames/GameArt?logo=github&style=for-the-badge&label=Latest%20Release
 [releases-url]: https://github.com/AndManGames/GameArt/releases
 [contributors-shield]: https://img.shields.io/github/contributors/AndManGames/GameArt.svg?logo=github
 [contributors-url]: https://github.com/AndManGames/GameArt/graphs/contributors
