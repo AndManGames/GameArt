@@ -3,7 +3,7 @@
 <!-- PROJECT SHIELDS -->
 [![Releases][releases-shield]][releases-url]
 [![Releases][pypi-shield]][pypi-url]
-[![Python][pypi-pythonversion-shield]][pypi-url]
+[![Python][pypi-pythonversion-shield]][pypi-url] \
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
