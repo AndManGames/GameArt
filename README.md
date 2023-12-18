@@ -63,7 +63,7 @@ GameArt is still work in progress. Currently it is possible to create a png-file
 These package versions are available:
 * `gameart`: This version is targeting the end user version with the possibility to record your mouse movement, save it as a csv and draw a png based on csv input.
 * `ameart[dev]`: This version has additional dev packages to be able to contribute to this project.
-* `gameart[release]`: This version has additional build packages to generate and upload to PyPi and for generating executables.
+* `gameart[release]`: This version has additional build packages to generate a package and upload to PyPi.
 
 
 ### Prerequisites
