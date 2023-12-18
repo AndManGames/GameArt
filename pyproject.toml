@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "gameart"
-version = "0.1.24"
+version = "0.1.25"
 authors = [
   { name="Andreas Schneider", email="author@example.com" },
 ]
@@ -32,7 +32,6 @@ dev = [
   'pre-commit >= 3.5.0',
   ]
 release = [
-  'pyinstaller >= 6.3.0',
   'build >= 1.0.3'
 ]
 
