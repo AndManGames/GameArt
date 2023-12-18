@@ -10,7 +10,37 @@ on:
     branches: [ "main" ]
 
 jobs:
+  check_if_version_updated:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Get version of python package
+        uses: maybe-hello-world/pyproject-check-version@v4
+        id: getversion
+        with:
+          pyproject-path: "./pyproject.toml"
+
+      - name: Output versions
+        run: |
+            echo "Local version: ${{ steps.getversion.outputs.local_version }}"
+            echo "Public version: ${{ steps.getversion.outputs.public_version }}"
+            echo "Version updated? ${{ steps.getversion.outputs.local_version_is_higher }}"
+
+      - name: Check if version updated
+        if: ${{ steps.getversion.outputs.local_version_is_higher == 'false'}}
+        continue-on-error: false
+        uses: actions/github-script@v3
+        with:
+          script: |
+              core.setFailed('Version in ./pyproject.toml has not been updated.')
+
+      - name: Output success message
+        if: ${{ steps.getversion.outputs.local_version_is_higher == 'true'}}
+        run: echo "Version was updated!"
+
   build:
+    needs: check_if_version_updated
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -23,6 +53,7 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
+
     - name: Create Virtual environment
       run: |
         python -m pip install --upgrade pip
@@ -32,9 +63,22 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install .[dev]
+
     - name: Check with pre-commit (Formatting, Linting, etc.)
       run: |
         pre-commit run --all-files
+
     - name: Test with pytest
       run: |
         pytest
+
+  auto-approve-if-codeowner:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    if: github.actor == 'AndManGames'
+    steps:
+      - uses: hmarr/auto-approve-action@v3
+        with:
+          review-message: "Auto approved because PR was created by codeowner."
