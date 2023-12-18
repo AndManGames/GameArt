@@ -41,7 +41,6 @@ jobs:
         run: echo "Version was updated!"
 
   build:
-    needs: check_if_version_updated
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
