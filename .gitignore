@@ -167,6 +167,8 @@ cython_debug/
 
 # project specific folders
 gameart_images/
+dist/
+dist_exe/
 
 # VS Code
 settings.json
