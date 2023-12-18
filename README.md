@@ -1,7 +1,7 @@
 <a name="readme-top"></a>
 
 <!-- PROJECT SHIELDS -->
-[![Releases][releases-shield]][releases-url]
+[![Releases][releases-shield]][releases-url] \
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
@@ -181,6 +181,8 @@ Project Link: [https://github.com/AndManGames/GameArt](https://github.com/AndMan
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[releases-shield]: https://img.shields.io/github/v/release/AndManGames/GameArt?logo=github
+[releases-url]: https://github.com/AndManGames/GameArt/releases
 [contributors-shield]: https://img.shields.io/github/contributors/AndManGames/GameArt.svg?style=for-the-badge
 [contributors-url]: https://github.com/AndManGames/GameArt/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/AndManGames/GameArt.svg?style=for-the-badge
@@ -189,8 +191,6 @@ Project Link: [https://github.com/AndManGames/GameArt](https://github.com/AndMan
 [stars-url]: https://github.com/AndManGames/GameArt/stargazers
 [issues-shield]: https://img.shields.io/github/issues/AndManGames/GameArt.svg?style=for-the-badge
 [issues-url]: https://github.com/AndManGames/GameArt/issues
-[releases-shield]: https://img.shields.io/github/release-date/AndManGames/GameArt.svg?style=for-the-badge
-[releases-url]: https://github.com/AndManGames/GameArt/releases
 [license-shield]: https://img.shields.io/github/license/AndManGames/GameArt.svg?style=for-the-badge
 [license-url]: https://github.com/AndManGames/GameArt/blob/master/LICENSE.txt
 [product-screenshot]: images/screenshot.png
