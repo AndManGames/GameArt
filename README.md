@@ -91,6 +91,7 @@ These package versions are available:
 
 1. Executable:
     1. Download latest executable from here: https://github.com/AndManGames/GameArt/releases (Windows: `gameart.exe`; Linux: `gameart`)
+    **Important**: It could be that your browser and/or Windows defender is flagging the executable as malicious. This comes from pyinstaller and I am working on fixing that. You can be sure that the executables are safe!
 2. From GitHub:
     1. Clone the repo
     ```sh
