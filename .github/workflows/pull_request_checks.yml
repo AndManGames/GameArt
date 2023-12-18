@@ -33,7 +33,7 @@ jobs:
         uses: actions/github-script@v3
         with:
           script: |
-              core.setFailed('Version in ./pyproject.toml has not been updated')
+              core.setFailed('Version in ./pyproject.toml has not been updated. ${{ steps.getversion.outputs.local_version_is_higher }}. ')
 
   build:
     needs: check_if_version_updated
