@@ -4,9 +4,9 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "gameart"
-version = "0.1.26"
+version = "0.1.27"
 authors = [
-  { name="Andreas Schneider", email="author@example.com" },
+  { name="Andreas Schneider", email="andmangames@gmail.com" },
 ]
 description = "Create printable art with the movement of your mouse."
 readme = "README.md"
